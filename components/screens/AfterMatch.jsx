@@ -1,0 +1,20 @@
+'use client';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowUpRight, Heart, Ticket, Share2 } from 'lucide-react';
+import { useFanModus } from '@/context/FanModusContext';
+import { formatTime } from '@/lib/fanmodus';
+import { Button, Eyebrow, Asset, MatchHeader, SectionTop } from '@/components/ui/Primitives';
+export function MatchSummary() {
+  const { seconds, entries, dispatch } = useFanModus();
+  return <div className="screen summary-screen"><SectionTop number="FT">YOUR MATCHDAY, RECAPTURED</SectionTop><h1>LESS SCREEN.<br/><span>MORE MEMORIES.</span></h1><MatchHeader phase="FULL TIME" score/><div className="result-stat"><Eyebrow>PHONE-FREE TIME</Eyebrow><strong>{formatTime(seconds)}</strong></div><div className="result-stat result-entries"><div><Eyebrow>ENTRIES EARNED</Eyebrow><strong>{entries}</strong></div><Ticket size={74} strokeWidth={1}/></div><div className="bottom-actions"><p>You showed up. You stayed present.<br/>That’s a matchday well spent.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'thanks' })}>VIEW YOUR MATCH TICKET</Button></div></div>;
+}
+export function ThankYou({ onShare, onStats }) {
+  const { dispatch } = useFanModus();
+  return <div className="screen thanks-screen"><Eyebrow>YOU’RE WHAT MAKES THE WALL.</Eyebrow><div className="thank-you-hero"><Heart className="heart-outline" size={105} strokeWidth={1}/><h1>THANKS FOR<br/><span>BEING<br/>PRESENT!</span></h1></div><p>The noise. The nerves. The last-minute roar.<br/>Some things deserve your full attention.</p><Asset name="stadium"/><div className="bottom-actions"><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'prize' })}>SEE IF YOU’VE WON</Button><Button secondary onClick={onStats}>SEE MATCH STATISTICS</Button><button className="text-button" onClick={onShare}><Share2 size={17}/> SHARE YOUR MATCHDAY <ArrowUpRight size={16}/></button><button className="text-button muted" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'menu' })}>BACK TO BVB APP</button></div></div>;
+}
+export function PrizeReveal() {
+  const { session, dispatch } = useFanModus();
+  const reduced = useReducedMotion();
+  const revealed = session.ticketRevealed;
+  return <div className="screen prize-reveal"><SectionTop number="09">ONE LAST MATCHDAY MOMENT</SectionTop><h1>YOUR<br/><span>MATCH PRIZE.</span></h1><p aria-live="polite">{revealed ? 'Thanks for being part of FanModus.' : 'Tap the ticket to reveal if you’ve won.'}</p><div className="ticket-perspective"><motion.button aria-label={revealed ? 'No luck today. See you next match!' : 'Tap ticket to reveal your match prize'} aria-pressed={revealed} onClick={() => { if (!revealed) dispatch({ type: 'REVEAL' }); }} className={`prize-ticket ${revealed ? 'revealed' : ''}`} animate={{ rotateY: reduced ? 0 : revealed ? 180 : 0 }} transition={{ duration: reduced ? 0 : 0.6, ease: [0.22, 0.68, 0, 1] }}><div className="ticket-face ticket-front" aria-hidden={revealed} style={reduced && revealed ? { visibility: 'hidden' } : undefined}><div className="ticket-meta"><span>FANMODUS</span><span>MATCHDAY 12</span></div><Asset name="bvb"/><div className="ticket-divider"/><Ticket size={48} strokeWidth={1}/><strong>TAP TO<br/>REVEAL</strong><p>YOUR MOMENT OF TRUTH.</p><div className="ticket-barcode"/><span className="eyebrow">EINMAL BORUSSE. IMMER BORUSSE.</span></div><div className="ticket-face ticket-back" aria-hidden={!revealed} style={reduced ? { transform: 'none', visibility: revealed ? 'visible' : 'hidden' } : undefined}><div className="ticket-meta"><span>FANMODUS</span><span>MATCHDAY 12</span></div><Asset name="bvb"/><div className="ticket-divider"/><strong>NO LUCK<br/>TODAY.</strong><p>The final whistle has blown on this draw.</p><Asset name="stadium"/><h2>SEE YOU NEXT MATCH!</h2><div className="ticket-barcode"/></div></motion.button></div><div className="bottom-actions"><p className="fine-print">Simulated prize reveal · predetermined demo result</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'menu' })}>BACK TO BVB APP</Button></div></div>;
+}
