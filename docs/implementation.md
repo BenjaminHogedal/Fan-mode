@@ -59,3 +59,11 @@ Desktop med mus/trackpad (`hover: hover` og `pointer: fine`) bruger nu `DesktopV
 Den transformerede ramme indeholder fixed overlays; demo-knappen er absolut positioneret i appen. Appens højde og viewportbaserede typografi bruger referencekoordinater på desktop. `PreviewFit` tilpasser fælles skærm-/dialogindhold, hvis en eksisterende skærm er højere end pladsen, så knapper ikke klippes eller kræver scrolling. Motion-animationerne har egne, uændrede transforms. Swipe normaliserer pointerkoordinater efter den faktisk renderede skala (inklusive indholdstilpasningen).
 
 Geometrien testes ved 1440 × 900, 1440 × 740, 1280 × 720, 1024 × 600, 800 × 450, 600 × 500, 360 × 640 og 1920 × 1080. Dette er beregningstests, ikke browser-rendering. Browser-skillens forbindelse fejler fortsat med manglende `sandboxPolicy`, så faktisk visuel resize, klik/swipe og overlays er ikke browser-verificeret.
+
+## Referencebaseret startflow
+
+Menu, intro, How it works, præmier, aktivering og lokationsdialog er opdateret efter den vedlagte startflow-reference. Menuen bruger mørke felter og gul bundnavigation; onboarding bruger gule penselstrøg, lyse papirstrimler, cirklede trin og en papir-CTA. Aktivering har centralt power-symbol, 1 minut = 1 lod og en afrundet swipekontrol. FanModus-navnet og de engelske UI-tekster bevares.
+
+`FanModusWordmark` er en enkel tekstplaceholder, ikke et officielt sponsorlogo. `stand-placeholder.svg` og `jersey-placeholder.svg` er originale, lokale vektorillustrationer, som udskiftes via `lib/assets.js` med de rigtige stadionfotos og produktassets. Lokationsdialogens systemblå farve er afgrænset til iOS-simuleringen. Dialogen siger udtrykkeligt, at den ikke anmoder om GPS; begge tillad-knapper godkender den samme lokale demosimulering, og afvisning åbner den eksisterende retry-tilstand.
+
+De øvrige menufelter viser tydeligt afgrænsede placeholders; FanModus er det komplette flow. Præmieskærmens See all prizes åbner en oversigt og kan lukkes med tastatur. Browser-verifikation er fortsat begrænset af den tidligere dokumenterede værktøjsfejl.

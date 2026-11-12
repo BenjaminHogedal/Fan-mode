@@ -1,16 +1,16 @@
 'use client';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, Heart, Ticket, Share2 } from 'lucide-react';
+import { ArrowUpRight, Star, Ticket, Share2 } from 'lucide-react';
 import { useFanModus } from '@/context/FanModusContext';
 import { formatTime } from '@/lib/fanmodus';
-import { Button, Eyebrow, Asset, MatchHeader, SectionTop } from '@/components/ui/Primitives';
+import { Button, Eyebrow, Asset, SectionTop } from '@/components/ui/Primitives';
 export function MatchSummary() {
   const { seconds, entries, dispatch } = useFanModus();
-  return <div className="screen summary-screen"><SectionTop number="FT">YOUR MATCHDAY, RECAPTURED</SectionTop><h1>LESS SCREEN.<br/><span>MORE MEMORIES.</span></h1><MatchHeader phase="FULL TIME" score/><div className="result-stat"><Eyebrow>PHONE-FREE TIME</Eyebrow><strong>{formatTime(seconds)}</strong></div><div className="result-stat result-entries"><div><Eyebrow>ENTRIES EARNED</Eyebrow><strong>{entries}</strong></div><Ticket size={74} strokeWidth={1}/></div><div className="bottom-actions"><p>You showed up. You stayed present.<br/>That’s a matchday well spent.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'thanks' })}>VIEW YOUR MATCH TICKET</Button></div></div>;
+  return <div className="screen summary-screen"><div className="reward-burst" aria-hidden="true"><div><Ticket size={104} strokeWidth={1.5}/><Star size={29} fill="currentColor"/></div></div><div className="earned-result"><Eyebrow>YOU HAVE COLLECTED</Eyebrow><strong>{entries}</strong><h1>ENTRIES!</h1></div><div className="bottom-actions"><p className="result-caption">YOUR ENTRIES ARE IN.<br/>PROGRESS TO SEE YOUR RESULTS.</p><div className="result-time-row"><span>Phone-free time</span><strong>{formatTime(seconds)}</strong></div><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'thanks' })}>VIEW YOUR MATCH TICKET</Button></div></div>;
 }
 export function ThankYou({ onShare, onStats }) {
   const { dispatch } = useFanModus();
-  return <div className="screen thanks-screen"><Eyebrow>YOU’RE WHAT MAKES THE WALL.</Eyebrow><div className="thank-you-hero"><Heart className="heart-outline" size={105} strokeWidth={1}/><h1>THANKS FOR<br/><span>BEING<br/>PRESENT!</span></h1></div><p>The noise. The nerves. The last-minute roar.<br/>Some things deserve your full attention.</p><Asset name="stadium"/><div className="bottom-actions"><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'prize' })}>SEE IF YOU’VE WON</Button><Button secondary onClick={onStats}>SEE MATCH STATISTICS</Button><button className="text-button" onClick={onShare}><Share2 size={17}/> SHARE YOUR MATCHDAY <ArrowUpRight size={16}/></button><button className="text-button muted" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'menu' })}>BACK TO BVB APP</button></div></div>;
+  return <div className="screen thanks-screen"><div className="presence-halo" aria-hidden="true"><span>FANMODUS</span></div><div className="thank-you-hero"><h1>THANKS FOR<br/><span>BEING PRESENT!</span></h1></div><Asset name="stadium"/><div className="bottom-actions"><p>You made every minute count.<br/>See you at the next match!</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'prize' })}>SEE IF YOU’VE WON</Button><button className="text-button muted" onClick={onStats}>SEE MATCH STATISTICS</button><div className="thanks-links"><button className="text-button" onClick={onShare}><Share2 size={15}/> SHARE <ArrowUpRight size={14}/></button><button className="text-button muted" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'menu' })}>BACK TO BVB APP</button></div></div></div>;
 }
 export function PrizeReveal() {
   const { session, dispatch } = useFanModus();

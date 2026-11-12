@@ -1,29 +1,82 @@
 'use client';
-import { ArrowUpRight, Smartphone, MapPin, Ticket, ChevronRight, Trophy, Newspaper, Users, ShoppingBag } from 'lucide-react';
+import { useCallback, useState } from 'react';
+import { ArrowRight, MapPin, Ticket, Shirt, Newspaper, Menu, CalendarDays, MessageSquare, Ellipsis, Power, ShoppingBag, Crown } from 'lucide-react';
 import { useFanModus } from '@/context/FanModusContext';
-import { Button, Asset, Eyebrow, StepDots, SectionTop, MatchHeader } from '@/components/ui/Primitives';
+import { Button, Asset, MatchHeader } from '@/components/ui/Primitives';
+import Modal from '@/components/ui/Modal';
+import FanModusWordmark from '@/components/ui/FanModusWordmark';
 import SwipeToActivate from '@/components/animations/SwipeToActivate';
+
+function PhoneAwayIcon() {
+  return <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="1.5"/><path d="M10 5h4m-3 14h2M3 2l18 20"/></svg>;
+}
 
 export function BvbMenu() {
   const { dispatch, session } = useFanModus();
+  const [preview, setPreview] = useState(null);
+  const closePreview = useCallback(() => setPreview(null), []);
   const active = session.fanModusStatus === 'active';
-  return <div className="screen menu-screen"><div className="menu-welcome"><Eyebrow>BLACK. YELLOW. TOGETHER.</Eyebrow><h1>HEJA<br/><span>BVB.</span></h1><Asset name="stadium" /><span className="venue-label">DORTMUND, OUR HOME.</span></div><button className="fanmodus-entry" onClick={() => dispatch({ type: 'NAVIGATE', screen: active ? (session.matchPhase === 'pre-match' ? 'kickoff' : session.matchPhase) : 'intro' })}><div className="entry-icon"><Smartphone size={26} /><span className="cross-stroke" /></div><div><span className="eyebrow">YOUR MATCHDAY. MORE REAL.</span><strong>FanModus</strong><p>{active ? 'Your session is active. Jump back in.' : 'Less scrolling. More Südtribüne.'}</p></div><ArrowUpRight size={27} /></button><div className="menu-section"><SectionTop number="09">THE BLACK & YELLOW WORLD</SectionTop>{[[Newspaper, 'Match centre', 'match'], [Trophy, 'Fan rewards', 'prizes'], [Users, 'The FanModus idea', 'intro'], [ShoppingBag, 'Matchday collection', 'prizes']].map(([Icon, name, screen]) => <button className="menu-row" key={name} onClick={() => dispatch({ type: 'NAVIGATE', screen: screen === 'match' ? 'intro' : screen })}><Icon size={20} /><span>{name}</span><ChevronRight size={18} /></button>)}</div><p className="prototype-note">AN INDEPENDENT FAN EXPERIENCE · EXAM PROTOTYPE</p></div>;
+  const enterFanModus = () => dispatch({ type: 'NAVIGATE', screen: active ? (session.matchPhase === 'pre-match' ? 'kickoff' : session.matchPhase) : 'intro' });
+  const tabs = [[Newspaper, 'News'], [Shirt, 'Squad'], [CalendarDays, 'Fixtures'], [Shirt, 'My BVB'], [Menu, 'More']];
+  return <div className="screen menu-screen matchday-menu">
+    <MatchHeader phase="MATCHDAY"/>
+    <h1>MATCHDAY<br/>GAMES</h1>
+    <div className="matchday-tiles">
+      <button onClick={() => setPreview('Starting XI prediction')}><Shirt size={34}/><span>Starting XI prediction</span></button>
+      <button onClick={() => setPreview('Match polls')}><MessageSquare size={34}/><span>Match polls</span></button>
+      <button className="fanmodus-tile" onClick={enterFanModus}><PhoneAwayIcon/><FanModusWordmark/><span>{active ? 'Resume FanModus' : 'FanModus'}</span></button>
+    </div>
+    <nav className="bvb-tab-bar" aria-label="BVB app navigation">{tabs.map(([Icon, label]) => <button key={label} aria-current={label === 'Fixtures' ? 'page' : undefined} onClick={() => label === 'Fixtures' ? setPreview(null) : setPreview(label)}><Icon size={26}/><span>{label}</span></button>)}<span className="ios-home-indicator" aria-hidden="true"/></nav>
+    {preview && <Modal title={preview} onClose={closePreview}><div className="menu-feature-preview"><h2>{preview}</h2><p>This part of the BVB app is a placeholder in this prototype. Explore the complete FanModus matchday experience.</p><Button onClick={enterFanModus}>OPEN FANMODUS</Button><button className="text-button" onClick={() => setPreview(null)}>BACK TO MATCHDAY</button></div></Modal>}
+  </div>;
 }
+
 export function Intro() {
   const { dispatch } = useFanModus();
-  return <div className="screen intro-screen"><div><SectionTop number="01 / 04">WELCOME TO FANMODUS</SectionTop><h1>THE BEST<br/>MOMENTS<br/>AREN’T ON<br/><span className="brush-highlight">YOUR PHONE.</span></h1><p className="intro-copy">90 minutes. One yellow wall.<br/>Be part of every second.</p></div><div className="intro-graphic" aria-hidden="true"><span>09</span><div className="phone-outline"><Smartphone strokeWidth={1} size={68}/><div /></div><span className="graphic-caption">BE HERE.<br/>BE BORUSSIA.</span></div><div className="bottom-actions"><p>Put your phone away. Feel the match.<br/>Earn entries for exclusive BVB prizes.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'how' })}>GET STARTED</Button><StepDots step={1}/></div></div>;
+  return <div className="screen intro-screen reference-intro">
+    <Asset name="stand" className="scene-backdrop"/>
+    <div className="intro-branding"><Asset name="bvb"/><FanModusWordmark/></div>
+    <div className="intro-brush-title"><h1><span>90 MINUTES</span><span>WITHOUT</span><span>YOUR PHONE.</span></h1><div className="scribble-underline" aria-hidden="true"/></div>
+    <div className="intro-bottom"><p>Be part of the atmosphere,<br/>stay present and win<br/>exclusive prizes.</p><svg className="handdrawn-arrow" viewBox="0 0 90 110" fill="none" aria-hidden="true"><path d="M7 5c75-13 85 59 33 83m-2-20 1 24 23-9M8 9c65-7 80 54 38 72" stroke="currentColor" strokeWidth="2"/></svg><button className="paper-button" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'how' })}>GET STARTED</button></div>
+  </div>;
 }
+
 export function HowItWorks() {
   const { dispatch } = useFanModus();
-  const steps = [[MapPin, 'ACTIVATE FANMODUS', 'Activate FanModus at Westfalenstadion.'], [Smartphone, 'PUT YOUR PHONE AWAY', 'Keep your phone in your pocket and enjoy the match.'], [Ticket, 'EARN ENTRIES', 'Earn one entry for every completed phone-free minute.']];
-  return <div className="screen"><SectionTop number="02 / 04">A BETTER MATCHDAY</SectionTop><h1>LESS PHONE.<br/><span>MORE GAME.</span></h1><p>Three steps. A whole different feeling.</p><div className="steps">{steps.map(([Icon, title, text], i) => <div className="step" key={title}><span className="step-number">0{i + 1}</span><div><Icon size={28}/><h2>{title}</h2><p>{text}</p></div></div>)}</div><div className="bottom-actions"><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'prizes' })}>EXPLORE THE REWARDS</Button><StepDots step={2}/></div></div>;
+  const steps = [['ACTIVATE', 'AT THE STADIUM', 'Turn on FanModus when you are at Westfalenstadion.'], ['KEEP IT AWAY', null, 'Leave your phone in your pocket.'], ['COLLECT ENTRIES', null, 'Earn entries for every phone-free minute.']];
+  return <div className="screen how-screen">
+    <Asset name="stand" className="scene-backdrop"/><FanModusWordmark/>
+    <div className="how-title"><h1>HOW IT<br/>WORKS</h1><div className="scribble-underline" aria-hidden="true"/></div>
+    <div className="reference-steps">{steps.map(([title, secondLine, text], i) => <div className="reference-step" key={title}><span className="circled-step">{i + 1}</span><div><h2><span>{title}</span>{secondLine && <span>{secondLine}</span>}</h2><p>{text}</p></div></div>)}</div>
+    <div className="bottom-actions"><button className="paper-button arrow-paper" aria-label="Continue to prizes" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'prizes' })}><ArrowRight size={108} strokeWidth={1}/></button></div>
+  </div>;
 }
+
 export function Prizes() {
   const { dispatch } = useFanModus();
-  return <div className="screen"><SectionTop number="03 / 04">PRESENCE HAS ITS REWARDS</SectionTop><h1>REAL MOMENTS.<br/><span>REAL REWARDS.</span></h1><p>More phone-free minutes.<br/>More chances to win.</p><div className="prize-grid"><div className="prize-feature"><span className="prize-tag">THE MATCHDAY HEADLINER</span><Asset name="jersey"/><h2>SIGNED BVB JERSEY</h2><p>Something to keep. A moment to remember.</p></div><div className="prize-small"><Asset name="tickets"/><h2>MATCH TICKETS</h2></div><div className="prize-small"><Asset name="merch"/><h2>EXCLUSIVE MERCH</h2></div></div><div className="bottom-actions"><p className="fine-print">Illustrative rewards. No real prize draw in this prototype.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'activation' })}>GET MATCH READY</Button><StepDots step={3}/></div></div>;
+  const [allPrizes, setAllPrizes] = useState(false);
+  const closePrizes = useCallback(() => setAllPrizes(false), []);
+  return <div className="screen prizes-screen">
+    <FanModusWordmark/>
+    <div className="prizes-title"><Crown size={57} strokeWidth={1.7} aria-hidden="true"/><h1>WIN PRIZES</h1></div>
+    <p className="prize-intro">The longer you stay phone-free,<br/>the higher your chance of winning.</p>
+    <div className="jersey-hero"><Asset name="jersey"/><span className="jersey-caption">SIGNED<br/>JERSEY</span></div>
+    <div className="reward-categories"><div><Ticket size={24}/><span>Match<br/>tickets</span></div><div><ShoppingBag size={24}/><span>BVB<br/>merch</span></div><div><Ellipsis size={26}/><span>And more</span></div></div>
+    <button className="text-button all-prizes-button" onClick={() => setAllPrizes(true)}>SEE ALL PRIZES</button>
+    <div className="bottom-actions"><button className="editorial-cta" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'activation' })}>GET MATCH READY <ArrowRight size={35}/></button></div>
+    {allPrizes && <Modal title="MATCHDAY REWARDS" onClose={closePrizes}><div className="all-prizes-list">{[['jersey', 'Signed BVB jersey'], ['tickets', 'Match tickets'], ['merch', 'Exclusive BVB merchandise']].map(([name, label]) => <div key={name}><Asset name={name}/><h2>{label}</h2></div>)}<p className="fine-print">Illustrative prizes. No real prize draw takes place in this prototype.</p><Button onClick={() => setAllPrizes(false)}>BACK TO PRIZES</Button></div></Modal>}
+  </div>;
 }
+
 export function Activation({ onLocation, onActivate }) {
   const { session } = useFanModus();
   const allowed = session.locationPermission === 'granted';
-  return <div className="screen activation-screen"><SectionTop number="04 / 04">READY WHEN YOU ARE</SectionTop><h1>YOUR PHONE<br/>CAN WAIT.<br/><span>THE WALL CAN’T.</span></h1><div className="entry-rule"><span>1</span><div>PHONE-FREE MINUTE<br/><strong>= 1 ENTRY</strong></div><Ticket size={33}/></div><MatchHeader/><button className={`location-check ${allowed ? 'verified' : ''}`} onClick={onLocation}><MapPin size={20}/><div><strong>{allowed ? 'STADIUM LOCATION CONFIRMED' : 'CONFIRM YOUR LOCATION'}</strong><span>{allowed ? 'Westfalenstadion · simulated check' : 'Activate at Westfalenstadion'}</span></div><ChevronRight size={18}/></button><div className="bottom-actions">{!allowed && <Button onClick={onLocation}>ENABLE LOCATION</Button>}<SwipeToActivate disabled={!allowed} onActivate={onActivate}/><p className="fine-print">Demo experience. Location and phone-free tracking are simulated. Your device use is never monitored.</p><StepDots step={4}/></div></div>;
+  return <div className="screen activation-screen reference-activation">
+    <div className="activation-title"><span>Activate</span><h1>Fan<span>Modus</span></h1></div>
+    <button className={`power-control ${allowed ? 'power-ready' : ''}`} onClick={onLocation} aria-label={allowed ? 'Stadium location confirmed. Review location.' : 'Enable simulated stadium location'}><Power size={125} strokeWidth={2}/></button>
+    <div className="activation-bottom"><div className="minute-entry-rule"><span>1 MINUTE</span><span>=</span><strong><Ticket size={47} strokeWidth={1.3}/>1 ENTRY</strong></div>
+    <button className="location-caption" onClick={onLocation}><MapPin size={13}/>{allowed ? 'Stadium confirmed · demo' : 'Enable stadium location'}</button>
+    <SwipeToActivate disabled={!allowed} onActivate={onActivate}/>
+    </div>
+  </div>;
 }

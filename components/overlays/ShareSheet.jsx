@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { Download, Share2 } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
-import { Button, Eyebrow } from '@/components/ui/Primitives';
+import { Button, Asset } from '@/components/ui/Primitives';
 import { useFanModus } from '@/context/FanModusContext';
+import DigitalTime from '@/components/ui/DigitalTime';
 import { formatTime } from '@/lib/fanmodus';
 import { createMatchImage, downloadImage } from '@/lib/share';
 export default function ShareSheet({ onClose }) {
@@ -23,5 +24,5 @@ export default function ShareSheet({ onClose }) {
     } catch (error) { setMessage(error.name === 'AbortError' ? 'Sharing cancelled. Your matchday is still here.' : 'Couldn’t export the image. Please try again.'); }
     finally { setBusy(false); }
   }
-  return <Modal title="YOUR MATCHDAY, WORTH SHARING" onClose={onClose} className="share-sheet"><div className="share-card"><Eyebrow>FANMODUS / MATCHDAY 12</Eyebrow><h2>I WAS HERE.<br/><span>ALL HEART.</span></h2><div className="share-score">BVB 09 <strong>2 : 1</strong> RBL</div><p>BORUSSIA DORTMUND × RB LEIPZIG</p><div className="share-stats"><div><strong>{formatTime(seconds)}</strong><span>PHONE-FREE TIME</span></div><div><strong>{entries}</strong><span>ENTRIES</span></div></div><h3>BE HERE. BE BORUSSIA.</h3><span className="fine-print">EXAM PROTOTYPE · SIMULATED SESSION</span></div><Button disabled={busy} onClick={() => exportImage(true)}><Share2 size={18}/> SHARE ON INSTAGRAM</Button><Button disabled={busy} secondary onClick={() => exportImage(false)}><Download size={18}/> SAVE IMAGE</Button><p className="fine-print">Uses your device’s share menu where supported. Otherwise, save the image and upload it to Instagram.</p><p className="share-status" role="status">{message}</p></Modal>;
+  return <Modal title="FULL TIME" onClose={onClose} className="share-sheet"><div className="share-card"><div className="share-ticket-band">FANMODUS</div><h2>MATCH<br/>EXPERIENCE</h2><div className="share-score"><Asset name="bvb"/><strong>2 - 1</strong><Asset name="opponent"/></div><div className="share-stats"><div><DigitalTime value={formatTime(seconds)}/><span>Phone-free time</span></div><div><strong>{entries}</strong><span>Entries earned</span></div></div><div className="ticket-barcode" aria-hidden="true"/></div><h2 className="share-heading">SHARE YOUR<br/>MATCH EXPERIENCE</h2><Button disabled={busy} onClick={() => exportImage(true)}><Share2 size={18}/> SHARE ON INSTAGRAM</Button><Button disabled={busy} secondary onClick={() => exportImage(false)}><Download size={18}/> SAVE IMAGE</Button><p className="fine-print">Uses your device’s share menu where supported. Otherwise, save the image and upload it to Instagram.</p><p className="share-status" role="status">{message}</p></Modal>;
 }
