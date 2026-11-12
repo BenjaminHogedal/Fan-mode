@@ -1,9 +1,13 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { DESKTOP_PREVIEW_QUERY, MOBILE_FRAME, getFrameScale } from '@/lib/viewport';
+
+const PreviewToolsContext = createContext(null);
+export const usePreviewTools = () => useContext(PreviewToolsContext);
 
 /** Desktop reserves only the scaled footprint; touch devices retain normal flow. */
 export default function DesktopViewport({ children }) {
+  const [toolsHost, setToolsHost] = useState(null);
   const viewport = useRef(null);
   const footprint = useRef(null);
   const frame = useRef(null);
@@ -37,5 +41,5 @@ export default function DesktopViewport({ children }) {
     };
   }, []);
 
-  return <div className="desktop-viewport" ref={viewport}><div className="mobile-footprint" ref={footprint}><div className="mobile-frame" ref={frame}>{children}</div></div></div>;
+  return <PreviewToolsContext.Provider value={toolsHost}><div className="desktop-viewport" ref={viewport}><div className="mobile-footprint" ref={footprint}><div className="mobile-frame" ref={frame}>{children}</div><div className="preview-tools" ref={setToolsHost}/></div></div></PreviewToolsContext.Provider>;
 }
