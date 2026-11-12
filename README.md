@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BVB FanModus
 
-## Getting Started
+Interaktiv mobile-first eksamensprototype bygget med Next.js App Router, JavaScript, React og Motion for React.
 
-First, run the development server:
+## Start lokalt
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Åbn [localhost:3000/?demo=1](http://localhost:3000/?demo=1).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Demo-panelet åbnes med **DEMO** nederst til højre. Spring gennem kampens faser eller vælg **Set 86:32 / 86 entries** for et færdigt resultat. Ingen GPS, login eller backend er nødvendig.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `?demo=1`: vis demo-controls og automatisk deling fra takkesiden.
+- `?demo=0`: skjul demo-controls.
+- `?demo=1&variant=a`: minimal motion.
+- `?demo=1&variant=b`: balanced (standard).
+- `?demo=1&variant=c`: expressive.
 
-## Learn More
+Demo er som standard slået til under `npm run dev`. Produktionsvisning bruger `?demo=1` ved demonstration.
 
-To learn more about Next.js, take a look at the following resources:
+## Checks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm test
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Dokumentation
 
-## Deploy on Vercel
+- [Implementering, status og begrænsninger](docs/implementation.md)
+- [Dan Saffers microinteraction-model](docs/microinteractions.md)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Assets udskiftes centralt i `lib/assets.js`. Automatisk åbning af delingsvisningen styres af `AUTO_SHARE` i `lib/motion.js`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lokation, telefonfri registrering, kamp og præmieresultat er simulerede. Deling bruger Web Share API, hvis fil-deling understøttes; ellers downloades en PNG. Browseren poster ikke direkte på Instagram.
