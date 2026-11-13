@@ -1,0 +1,24 @@
+.ticket { position: relative; width: 329px; height: 528px; color: #000; }
+.body { position: absolute; left: 21px; top: 16.2px; }
+.underline { position: absolute; left: 136.42px; top: 191.98345px; }
+.score { position: absolute; left: 66px; top: 214.87px; width: 198px; height: 67px; }
+.score img { position: absolute; object-fit: cover; }
+.score img:first-child { left: 0; top: 0; }
+.score img:last-child { left: 133.58px; top: 2.52px; }
+.score strong { position: absolute; left: 75px; top: 23.75px; width: 59px; font-family: var(--font-display), sans-serif; font-size: 42px; font-weight: 400; line-height: 18px; white-space: nowrap; }
+.leftNotch, .rightNotch { position: absolute; top: 233.345px; width: 43.1902px; height: 30px; transform: rotate(90deg); }
+.leftNotch { left: -6.5951px; } .rightNotch { left: 292.4049px; }
+.band { position: absolute; left: 21px; top: 16px; width: 299px; height: 70px; border-radius: 24px 24px 0 0; background: linear-gradient(to right, #fde100 60.577%, #978600); }
+.bottomNotch { position: absolute; left: 151px; top: 495.61px; }
+.topNotch { position: absolute; left: 151px; top: 0; }
+.title { position: absolute; left: 83.6635px; top: 94.5315px; width: 174.913px; height: 107.582px; margin: 0; display: block; transform: rotate(-5.3deg) skewX(-.75deg); font-family: var(--font-display), sans-serif; font-size: 46.08px; font-weight: 400; line-height: normal; text-align: center; color: #000; }
+.brand { position: absolute; left: 21px; top: 42px; width: 299px; margin: 0; font-family: var(--font-display), sans-serif; font-size: 28px; line-height: 32.5px; text-align: center; }
+.barcode { position: absolute; left: 73px; top: 441px; }
+.stats { position: absolute; left: 21px; top: 330px; width: 299px; display: flex; justify-content: center; gap: 36px; }
+.stats > div { position: relative; width: 116px; display: flex; flex-direction: column; align-items: center; }
+.stats strong { display: block; width: 116px; height: 19px; margin-top: 16px; text-align: center; font-weight: 400; line-height: 18px; }
+.stats span { display: block; width: 116px; height: 19px; font-size: 11px; font-weight: 300; line-height: 18px; text-align: center; }
+.time { font-size: 24px; letter-spacing: -3.84px; }
+.entries { font-family: var(--font-display), sans-serif; font-size: 38px; }
+.entryIcon { position: relative; width: 24px; height: 24px; }
+.entryGraphic { position: absolute; left: -2px; top: 5px; width: 28px; height: 15px; transform: rotate(-44.62deg); }
