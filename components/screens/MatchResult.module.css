@@ -1,0 +1,31 @@
+.resultBackground { position: absolute; left: -53px; top: -31px; width: 505px; height: 897px; }
+.resultBackground img, .thanksBackground img, .ticket img, .paper img { object-fit: cover; }
+.brushTop { position: absolute; left: 69.4715px; top: 313.479px; width: 256.087px; height: 54.073px; overflow: clip; transform: rotate(178.72deg); }
+.brushBottom { position: absolute; left: 69.4675px; top: 479.6025px; width: 264.723px; height: 75.358px; overflow: clip; transform: rotate(178.72deg); }
+.rays { position: absolute; left: 52px; top: 79px; width: 293px; height: 293px; }
+.rays img { transform: scale(.92138365); transform-origin: top left; }
+.ticketBlack { position: absolute; left: 155.4885px; top: 196.096px; width: 83px; height: 33px; background: #000; transform: rotate(-11.74deg); }
+.ticket { position: absolute; left: 87px; top: 142px; width: 215.625px; height: 143.75px; }
+.close { position: absolute; left: 343px; top: 47px; width: 32px; height: 32px; padding: 0; background: transparent; }
+.collected, .entriesLabel, .entries { position: absolute; margin: 0; font-family: var(--font-display), sans-serif; font-weight: 400; text-align: center; color: #fff; }
+.collected { left: 0; top: 313px; width: 391px; font-size: 32px; line-height: 65px; }
+.entriesLabel { left: 0; top: 500px; width: 390px; font-size: 48px; line-height: normal; }
+.paper { position: absolute; left: 34.2765px; top: 573.356px; width: 328px; height: 87px; transform: rotate(-10.95deg); }
+.brushNumber { position: absolute; left: 76.2345px; top: 355.6355px; width: 248.915px; height: 152.821px; overflow: clip; transform: rotate(-179.3deg); }
+.entries { left: 0; top: 438.5px; width: 390px; transform: translateY(-50%); font-size: 192px; line-height: normal; color: #fde100; }
+.awesome { position: absolute; left: 41.557px; top: 589.275px; width: 310.646px; height: 66.89px; display: flex; align-items: center; justify-content: center; margin: 0; transform: rotate(-11.89deg); color: #000; font-size: 28px; line-height: normal; text-align: center; }
+.time { position: absolute; left: 30px; top: 706px; width: 325px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #f2efe540; border-radius: 16px; padding: 8px 32px; background: #000; color: #fff; }
+.time span { font-size: 16px; line-height: normal; }
+.time strong { font-family: var(--font-display), sans-serif; font-size: 28px; font-weight: 400; line-height: normal; }
+.resultCta, .prizeCta { position: absolute; left: 30px; top: 771px; width: 325px; min-height: 55.33px; display: flex; gap: 8px; align-items: center; justify-content: center; padding: 8px 0 8px 50px; border-radius: 8px; background: #fde100; color: #000; }
+.resultCta span, .prizeCta span { font-family: var(--font-label), sans-serif; font-size: 20px; font-weight: 700; line-height: 32.5px; white-space: nowrap; }
+.thanksBackground { position: absolute; left: -46px; top: -11px; width: 481px; height: 855px; }
+.rings { position: absolute; left: 45.25px; top: 44px; }
+.club { position: absolute; left: 145.25px; top: 144px; width: 93px; height: 93px; padding: 0; background: transparent; }
+.thanksTitle { position: absolute; left: 0; top: 306.5px; width: 390px; margin: 0; font-family: var(--font-display), sans-serif; font-size: 56px; font-weight: 400; line-height: 65px; letter-spacing: 0; text-align: center; color: #fff; }
+.thanksTitle span { background: linear-gradient(to right, #fde100, #978600, #fde100); background-clip: text; color: transparent; }
+.thanksCopy { position: absolute; left: 29px; top: 643.5px; width: 325px; margin: 0; font-size: 20px; font-weight: 300; line-height: 29px; text-align: center; }
+.prizeCta { left: 29px; top: 718.5px; padding-left: 88px; padding-right: 8px; }
+.prizeCta span { font-size: 24px; }
+.statistics { position: absolute; left: 29px; top: 773.83px; width: 325px; display: flex; gap: 8px; align-items: center; justify-content: center; padding: 8px; background: transparent; color: #f2efe5; font-size: 18px; font-weight: 400; line-height: 32.5px; }
+.statistics span { text-decoration: underline; text-underline-offset: 3px; }

@@ -757,3 +757,12 @@ svg { flex-shrink: 0; }
   .preview-tools:has(.demo-toolbar) { max-width: calc(100vw - 16px); }
   .demo-toolbar > button:not(.demo-toggle) { min-height: 28px; padding: 4px 7px; }
 }
+
+/* Result and thanks are pages; the match ticket enters as a bottom sheet. */
+.app-shell:is([data-screen='summary'], [data-screen='thanks']) > main { padding-top: 0; }
+.app-shell:is([data-screen='summary'], [data-screen='thanks']) .screen-container { min-height: var(--app-height, 100dvh); }
+.app-shell:is([data-screen='summary'], [data-screen='thanks']) > .screen-back { display: none; }
+.modal-backdrop:has(.match-share-modal) { padding: 0; align-items: flex-end; background: #0006; backdrop-filter: none; overflow: hidden; }
+.match-share-modal { padding: 0; border: 0; background: #000; max-height: none; box-shadow: none; overflow: hidden; }
+.match-share-modal > .modal-top { display: none; }
+.app-shell[data-overlay-kind='share'] > .app-header { visibility: hidden; }
