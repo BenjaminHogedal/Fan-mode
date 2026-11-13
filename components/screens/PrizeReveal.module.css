@@ -1,0 +1,32 @@
+.club { position: absolute; left: 148.5px; top: 54px; width: 93px; height: 93px; }
+.title { position: absolute; left: 0; top: 169px; width: 390px; margin: 0; color: #fff; font-family: var(--font-display), sans-serif; font-size: 40px; font-weight: 400; line-height: normal; letter-spacing: 0; text-align: center; }
+.instructions { position: absolute; left: 0; top: 225px; width: 390px; margin: 0; color: #ffffffbf; font-size: 16px; font-weight: 400; line-height: 19px; text-align: center; }
+.scene { position: absolute; left: 31.875px; top: 346.5px; width: 326.25px; height: 326.25px; perspective: 1200px; }
+.rotator { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; border-radius: 0; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; touch-action: manipulation; }
+.rotator:focus-visible { outline: 2px solid #fde100; outline-offset: 12px; }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; color: #000; pointer-events: none; text-align: center; }
+.front { transform: translateZ(.5px); }
+.back { transform: rotateY(180deg) translateZ(.5px); }
+.surface { position: absolute; inset: 0; background: radial-gradient(ellipse 237.92px 237.92px at 50% 27.08%, #e3ae05, #f6c51a); box-shadow: 4px 4px 4px #ffffff26, 4px 4px 4px #ffffff26; }
+.texture { position: absolute; left: -.261px; top: -.2355px; width: 325.5px; height: 327.38px; overflow: hidden; border-radius: 20px; background: #fff; opacity: .5; }
+.texture > img { position: absolute; left: 0; top: 0; object-fit: cover; }
+.grain { position: absolute; inset: -2.87% -29.35% -2.87% -29.26%; mix-blend-mode: color-dodge; }
+.grain img { object-fit: fill; }
+.border { position: absolute; left: 19px; top: 46px; width: 288px; height: 243px; border: 1px solid #00000040; }
+.frontClub { position: absolute; left: 117.7436px; top: 72.75px; width: 90px; height: 90px; }
+.frontClub img, .backClub img { object-fit: cover; }
+.tapTitle { position: absolute; left: 0; top: 202.75px; width: 326.25px; margin: 0; font-family: var(--font-display), sans-serif; font-size: 32px; font-weight: 400; line-height: normal; }
+.frontStripeTop, .frontStripeBottom { position: absolute; }
+.frontStripeTop { left: 148.2753px; top: -7.25px; }
+.frontStripeBottom { left: -18.7247px; top: 296.75px; }
+.frontCutouts, .backCutouts { position: absolute; left: -20.26px; top: -20.25px; }
+.backTexture { left: -.13px; }
+.backTexture .border { left: 14px; top: 31px; width: 298px; height: 271px; }
+.backStripe { position: absolute; left: -18.58px; top: -6.27px; transform: scaleY(-1); }
+.backClub { position: absolute; left: 140.38px; top: 7.25px; width: 45px; height: 45px; }
+.noLuck { position: absolute; left: 32.065px; top: 58.7465px; width: 262px; margin: 0; font-size: 56px; font-weight: 400; line-height: 60px; filter: drop-shadow(0 1.5px .75px #00000040); }
+.explanation { position: absolute; left: 27.125px; top: 187.38px; width: 272.25px; height: 44.385px; margin: 0; font-family: var(--font-display), sans-serif; font-size: 20px; line-height: normal; color: #000000bf; }
+.stadium { position: absolute; left: .38px; top: 248.75px; width: 326px; display: flex; gap: 2px; align-items: center; justify-content: center; }
+.nextMatch { position: absolute; left: .375px; top: 280.75px; width: 326px; height: 20px; margin: 0; font-size: 12px; font-weight: 300; line-height: normal; }
+.home { position: absolute; left: 31.875px; top: 757.75px; width: 326.25px; min-height: 48.5px; display: flex; gap: 8px; align-items: center; justify-content: center; padding: 8px; border-radius: 8px; background: #fde100; color: #000; font-family: var(--font-label), sans-serif; font-size: 24px; font-weight: 700; line-height: 32.5px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

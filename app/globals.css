@@ -766,3 +766,8 @@ svg { flex-shrink: 0; }
 .match-share-modal { padding: 0; border: 0; background: #000; max-height: none; box-shadow: none; overflow: hidden; }
 .match-share-modal > .modal-top { display: none; }
 .app-shell[data-overlay-kind='share'] > .app-header { visibility: hidden; }
+
+/* The reversible prize ticket uses the complete Figma canvas. */
+.app-shell[data-screen='prize'] > main { padding-top: 0; }
+.app-shell[data-screen='prize'] .screen-container { min-height: var(--app-height, 100dvh); }
+.app-shell[data-screen='prize'] > .screen-back { display: none; }
