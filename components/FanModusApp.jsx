@@ -5,10 +5,13 @@ import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'motion/
 import { ArrowLeft, SlidersHorizontal, Menu, BarChart3 } from 'lucide-react';
 import { FanModusProvider, useFanModus } from '@/context/FanModusContext';
 import { motionSettings, AUTO_SHARE } from '@/lib/motion';
-import { BvbMenu, HowItWorks, Prizes } from './screens/BeforeMatch';
+import { BvbMenu } from './screens/BeforeMatch';
+import HowItWorks from './screens/HowItWorks';
+import Prizes from './screens/Prizes';
 import Intro from './screens/Intro';
 import Activation from './screens/Activation';
-import { ActivationProgress, ActivationSuccess, Kickoff, ActiveHalf, HalfTime, FullTime, CollectingEntries } from './screens/MatchDay';
+import Kickoff from './screens/Kickoff';
+import { ActivationProgress, ActivationSuccess, ActiveHalf, HalfTime, FullTime, CollectingEntries } from './screens/MatchDay';
 import { MatchSummary, ThankYou, PrizeReveal } from './screens/AfterMatch';
 import { Button, MatchHeader } from './ui/Primitives';
 import LoadingState from './ui/LoadingState';
