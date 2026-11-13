@@ -29,10 +29,11 @@ test('one background catch-up handles the entire match and caps scoring at full 
   assert.equal(elapsedSeconds(finished, start + 99999999), 5400);
 });
 test('reload recovers running session and ignores broken local data', () => {
-  const recovered = restoreSession(JSON.stringify(kickoff()), { variant: 'c' }, start + 3660000);
+  const recovered = restoreSession(JSON.stringify({ ...kickoff(), variant: 'c' }), { demoMode: false }, start + 3660000);
   assert.equal(recovered.matchPhase, 'second');
   assert.equal(elapsedSeconds(recovered, start + 3660000), 2760);
-  assert.equal(recovered.variant, 'c');
+  assert.equal(recovered.demoMode, false);
+  assert.equal('variant' in recovered, false);
   assert.equal(restoreSession('{bad', {}, start).currentScreen, 'menu');
   assert.equal(restoreSession(JSON.stringify({ version: 1 }), {}, start).currentScreen, 'menu');
 });

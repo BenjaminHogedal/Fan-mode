@@ -11,7 +11,7 @@ export function FanModusProvider({ children }) {
   useEffect(() => {
     const restore = setTimeout(() => {
       const query = new URLSearchParams(window.location.search);
-      const options = { demoMode: query.get('demo') === '1' || (process.env.NODE_ENV === 'development' && query.get('demo') !== '0'), variant: ['a', 'b', 'c'].includes(query.get('variant')) ? query.get('variant') : 'b' };
+      const options = { demoMode: query.get('demo') === '1' || (process.env.NODE_ENV === 'development' && query.get('demo') !== '0') };
       let raw = null;
       try { raw = localStorage.getItem(STORAGE_KEY); } catch { setStorageWarning(true); }
       dispatch({ type: 'RESTORE', session: restoreSession(raw, options, Date.now()) });

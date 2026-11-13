@@ -239,8 +239,6 @@ svg { flex-shrink: 0; }
 .share-sheet > .fine-print { margin-top: 12px; }
 .share-status { font-size: 11px; color: var(--color-yellow); margin-top: 12px; }
 .demo-sheet > p { font-size: 11px; }
-.demo-select { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 20px 0; font-size: 11px; }
-.demo-select select { background: #000; border: 1px solid var(--line); padding: 10px; max-width: 190px; border-radius: 0; }
 .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
 .demo-grid button { padding: 12px 9px; min-height: 48px; border: 1px solid var(--line); text-align: left; font-size: 11px; }
 .demo-grid button:hover { color: #000; background: var(--color-yellow); }
@@ -303,7 +301,6 @@ svg { flex-shrink: 0; }
 @media(prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; }
 }
-.app-shell[data-variant='a'] .background-chevrons > span { animation: none; }
 
 /* Reference-led mobile chrome: one quiet, simulated iOS status bar. */
 .app-header { height: calc(44px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 0 0; border: 0; display: block; }
@@ -415,7 +412,6 @@ svg { flex-shrink: 0; }
 .wordmark-accent { color: var(--color-red); }
 .scene-backdrop.asset-image { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; z-index: -1; pointer-events: none; }
 .scene-backdrop.asset-image img { object-fit: cover; }
-.app-shell[data-screen='intro'] .app-header { position: relative; z-index: 1; background: #11110b; }
 .app-shell[data-screen='intro'] .screen-back { color: var(--color-yellow); }
 .reference-intro { position: relative; isolation: isolate; padding: 10px 30px 42px; gap: 0; background: #0006; }
 .reference-intro .scene-backdrop { opacity: .65; }
@@ -542,7 +538,22 @@ svg { flex-shrink: 0; }
   .reference-step h2 { font-size: 25px; }
 }
 
-/* Intro 41:10112 owns its exact full-frame header; all other screens keep theirs. */
-.app-shell[data-screen='intro'] > .app-header,
+/* The intro's BVB logo provides its back navigation. */
 .app-shell[data-screen='intro'] > .screen-back { display: none; }
 .app-shell[data-screen='intro'] .screen-container { min-height: var(--app-height, 100dvh); }
+
+/* Persistent chrome is outside screen transitions and above every overlay. */
+.app-shell > .app-header {
+  display: block; position: fixed; z-index: 80; top: 0; left: 50%;
+  transform: translateX(-50%); width: min(100%, 430px); height: 54px;
+  padding: 0; pointer-events: none;
+}
+.app-shell > main { margin-top: 0; padding-top: calc(44px + env(safe-area-inset-top)); }
+.app-shell[data-screen='intro'] > .app-header { display: block; position: fixed; z-index: 80; background: transparent; }
+.app-shell:is([data-screen='intro'], [data-screen='activation']) > main { padding-top: 0; }
+.app-shell:is([data-screen='intro'], [data-screen='activation']) .screen-container { min-height: var(--app-height, 100dvh); }
+.app-shell[data-overlay='true'] > .app-header { background: #000; }
+.modal-backdrop { padding-top: max(70px, env(safe-area-inset-top)); }
+@media (hover: hover) and (pointer: fine) {
+  .modal-backdrop { padding: 70px 0 16px; }
+}

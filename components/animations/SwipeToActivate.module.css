@@ -1,0 +1,14 @@
+.track { position: relative; width: 100%; height: 60px; border-radius: 48px; overflow: clip; background: var(--color-yellow-dark); box-shadow: 0 4px 4px #fde10059; }
+.handle { position: absolute; left: 8px; top: 10px; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: grab; z-index: 2; touch-action: pan-y; }
+.handle:active { cursor: grabbing; }
+.handle:disabled { opacity: 1; }
+.handle:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+.disc { position: relative; display: block; width: 40px; height: 40px; }
+.disc > img { display: block; max-width: none; pointer-events: none; }
+.chevrons { position: absolute; left: 8px; top: 8px; width: 24px; height: 24px; background: #000; mask-image: var(--chevrons-image); mask-repeat: no-repeat; mask-size: 23.904px 24px; mask-position: 0.096px 0; }
+.label { position: absolute; top: 21px; left: 80px; margin: 0; color: var(--color-offwhite); font-family: var(--font-display), sans-serif; font-size: 22px; font-weight: 400; line-height: 18px; white-space: nowrap; pointer-events: none; }
+.stateIcon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
+.stateIcon > img { display: block; max-width: none; }
+.reducedLoading { color: var(--color-offwhite); font-size: 30px; line-height: 1; letter-spacing: 2px; }
+.shine { position: absolute; top: 0; left: 0; width: 100%; height: 48px; background: var(--color-yellow); pointer-events: none; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

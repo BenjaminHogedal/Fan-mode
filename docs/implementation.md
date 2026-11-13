@@ -4,7 +4,7 @@
 
 Hele prototypen er implementeret i det eksisterende JavaScript/App Router-projekt med engelske UI-tekster. Flow: BVB-menu → introduktion → How it works → præmier → lokation → swipe → aktivering → bekræftelse → kickoff → første halvleg → halvleg → anden halvleg → full time → optælling → resultat → tak → delingsvisning → præmieafsløring → menu.
 
-Derudover: loading, forbindelsesfejl, aktiveringsfejl, afvist lokation, retry, matchstatistik og låseskærmsmockup. Demo-panelet giver adgang til alle tidsfaser og fejl. Præmier og data er illustrative. Ingen GPS, login, backend, lyd eller device-overvågning er nødvendig.
+Derudover: loading, forbindelsesfejl, aktiveringsfejl, afvist lokation, retry, matchstatistik og låseskærmsmockup. Demo-panelet indeholder Previous screen, Next screen og Reset flow. Præmier og data er illustrative. Ingen GPS, login, backend, lyd eller device-overvågning er nødvendig.
 
 ## Arkitektur og valg
 
@@ -12,11 +12,11 @@ Derudover: loading, forbindelsesfejl, aktiveringsfejl, afvist lokation, retry, m
 - `context/FanModusContext.jsx`: hydration, localStorage og oprydning af interval/visibility-listener. Lodder er afledt af tiden, så dobbeltlagret state ikke divergerer.
 - `components/screens`: før, under og efter kampen. UI, animationer og overlays ligger i separate mapper.
 - `lib/assets.js`: ét sted at indsætte lokale originale assetstier. Asset-komponenten bruger Next Image, når en fil tilføjes.
-- `lib/motion.js`: A/B/C og automatisk deling (`AUTO_SHARE`).
+- `lib/motion.js`: fælles motion-defaults og automatisk deling (`AUTO_SHARE`); konkrete Figma-interaktioner har deres egne præcise tider.
 - `lib/share.js`: lokal Canvas-rendering til en 1080 × 1350 PNG. Eksporten har samme data og visuelle tema som previewkortet; det er ikke et pixelidentisk DOM-screenshot. Ingen eksportdependency er nødvendig.
 - Skrifttyperne Bebas Neue, Space Grotesk og Barlow Condensed er hentet fra Google Fonts med OFL-licenser og selvhostet via next/font/local. Første build med next/font/google kunne ikke hente dem i sandboxen. Lokale filer gør senere builds og demo uafhængige af fontnetværk. Regenerering: `python3 scripts/download-fonts.py`.
 - Den oprindelige Tailwind/Turbopack CSS-loader er fjernet fra next.config.mjs. Prototypen bruger almindelig CSS; den ubrugte loader krævede en portbaseret hjælpeproces, som miljøet blokerede. Øvrig Next-konfiguration og eksisterende dependencies er bevaret.
-- Halvlege varer 45 minutter, pausen 15 minutter og kickoff starter ved 34:20. Demo-spring bruger sammenhængende presets. Full-time-preset og knappen til 86:32 giver præcis 86 lodder og fryser resultatet.
+- Halvlege varer 45 minutter, pausen 15 minutter og kickoff starter ved 34:20. Demo-spring bruger sammenhængende presets. Full-time-preset giver 86:32, præcis 86 lodder og fryser resultatet.
 - Sessioner i en afbrudt aktiveringsanimation gendannes til aktiveringsskærmen. En ny aktivering nulstiller billetafsløringen.
 
 ## Tilgængelighed og layout
@@ -36,17 +36,17 @@ Browserkontrollen kunne ikke initialiseres: værktøjets sandbox-metadata mangle
 
 ## Manuel gennemgang før eksamen
 
-1. Åbn `/?demo=1&variant=b`, vælg Reset flow og gennemgå onboarding.
+1. Åbn `/?demo=1`, brug Previous screen til menuen og gennemgå onboarding.
 2. Afvis lokation, prøv igen, godkend den simulerede lokation.
 3. Test både kort swipe, fuldt swipe og Enter på håndtaget.
 4. Spring til kickoff; vent lidt; genindlæs og bekræft timerens fortsættelse.
 5. Spring til halvleg; bekræft at lodderne ikke vokser; gå til anden halvleg.
-6. Vælg 86:32 / 86 entries, fortsæt til tak, luk den automatiske delingsvisning.
+6. Brug Next screen frem til full time; preset giver 86:32 og 86 entries. Fortsæt til tak, og luk den automatiske delingsvisning.
 7. Åbn deling igen; gem PNG; prøv delingsmenu på en understøttet mobil.
 8. Åbn præmiebilletten, flip, tryk igen og genindlæs; resultatet skal forblive afsløret.
-9. Test alle fejl, retry, loading og låseskærm i panelet.
+9. Kontrollér fejl/retry separat og låseskærmen via kampens preview-link. Demo-panelet har navigation og Reset flow.
 10. Gentag ved 375 × 812, 390 × 844 og 430 × 932, tastatur og reduced motion.
-11. Sammenlign `variant=a`, `variant=b`, `variant=c`. Skjul panelet med `demo=0`.
+11. Skjul panelet med `demo=0`. Der er ingen valgbare animationsvarianter.
 
 ## Originale assets der mangler
 

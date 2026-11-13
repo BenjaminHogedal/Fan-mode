@@ -1,0 +1,15 @@
+.viewport { position: relative; width: 100%; flex: none; height: calc(844px * var(--activation-scale, 1)); overflow: clip; background: var(--color-black); }
+.canvas { position: absolute; top: 0; left: 0; width: 390px; height: 844px; transform: scale(var(--activation-scale, 1)); transform-origin: top left; overflow: clip; color: var(--color-offwhite); background: var(--color-black); }
+.activate { position: absolute; top: 56px; left: 0; width: 390px; height: 64px; display: flex; align-items: center; justify-content: center; font-family: var(--font-activation-heading), sans-serif; font-size: 24px; font-weight: 400; line-height: 65px; }
+.title { position: absolute; top: 109px; left: 0; width: 390px; height: 55px; margin: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-activation-heading), sans-serif; font-size: 50px; font-weight: 400; line-height: 65px; letter-spacing: 0; white-space: nowrap; }
+.title span { background: linear-gradient(to right, var(--color-yellow), var(--color-yellow-dark)); background-clip: text; -webkit-text-fill-color: transparent; }
+.power { position: absolute; top: 213px; left: 123px; width: 144px; height: 144px; padding: 0; background: none; }
+.power img, .ticket img { display: block; max-width: none; }
+.rule { font-family: var(--font-display), sans-serif; font-weight: 400; text-align: center; letter-spacing: 0; }
+.minute, .equals, .entry, .ticket { position: absolute; top: 0; left: 0; transform-origin: top left; display: flex; align-items: center; justify-content: center; }
+.minute { width: 122.25px; height: 48px; transform: matrix(.996330380, -.085590817, .085590817, .996330380, 139.639160, 601.463501); font-size: 31.5px; line-height: 48.75px; }
+.equals { width: 163px; height: 64px; transform: matrix(.996330380, -.085590817, .085590817, .996330380, 120.654175, 632.236816); font-size: 42px; line-height: 65px; }
+.entry { width: 203.75px; height: 80px; transform: matrix(.996330380, -.085590817, .085590817, .996330380, 107.532837, 666.868408); font-size: 52.5px; line-height: 81.25px; background: linear-gradient(to bottom, var(--color-yellow), var(--color-yellow-dark)); background-clip: text; -webkit-text-fill-color: transparent; }
+.ticket { width: 60px; height: 60px; transform: matrix(.996330380, -.085590817, .085590817, .996330380, 72.617554, 670.679810); }
+.slider { position: absolute; left: 31px; top: 754.574707px; width: 328px; height: 60px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

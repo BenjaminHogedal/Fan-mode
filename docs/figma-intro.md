@@ -4,7 +4,7 @@ Kilde: https://www.figma.com/design/OhrxqSyK9D1DtvUuulESvV/Dortmund-fanmodus---E
 
 ## Omfang
 
-Kun introen er ændret. `Intro.jsx` og dens CSS Module erstatter den tidligere intro i `BeforeMatch.jsx`. Skærmen bruger fortsat den centrale session/navigation, de eksisterende skærmtransitions og desktop-wrapperen. Get started går til `how`. BVB-logoet er en tastatur- og touchbetjenelig tilbageknap. Andre skærmes statusbar, fonte og assets er bevaret.
+Kun introen er ændret. `Intro.jsx` og dens CSS Module erstatter den tidligere intro i `BeforeMatch.jsx`. Skærmen bruger fortsat den centrale session/navigation, de eksisterende skærmtransitions og desktop-wrapperen. Get started går til `how`. BVB-logoet er en tastatur- og touchbetjenelig tilbageknap. Andre skærmes fonte og assets er bevaret. Statusbaren er efterfølgende samlet i en fælles, vedvarende komponent efter brugerens næste ændringsønske.
 
 Figma-data er læst via MCP `get_design_context` for framen og headline-, foto- og CTA-noderne. Supplerende read-only `use_figma`-læsninger gav de præcise transformationsmatricer, billedopacitet og tekstvægte. Ingen ændringer blev skrevet til Figma.
 
