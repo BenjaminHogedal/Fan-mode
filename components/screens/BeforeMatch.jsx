@@ -1,11 +1,11 @@
 'use client';
 import { useCallback, useState } from 'react';
-import { ArrowRight, MapPin, Ticket, Shirt, Newspaper, Menu, CalendarDays, MessageSquare, Ellipsis, Power, ShoppingBag, Crown } from 'lucide-react';
+import { ArrowRight, Ticket, Shirt, Newspaper, Menu, CalendarDays, MessageSquare, Ellipsis, ShoppingBag, Crown } from 'lucide-react';
 import { useFanModus } from '@/context/FanModusContext';
-import { Button, Asset, MatchHeader } from '@/components/ui/Primitives';
+import { Button, Asset } from '@/components/ui/Primitives';
 import Modal from '@/components/ui/Modal';
+import MatchdayMatchup from '@/components/ui/MatchdayMatchup';
 import FanModusWordmark from '@/components/ui/FanModusWordmark';
-import SwipeToActivate from '@/components/animations/SwipeToActivate';
 
 function PhoneAwayIcon() {
   return <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="1.5"/><path d="M10 5h4m-3 14h2M3 2l18 20"/></svg>;
@@ -19,7 +19,7 @@ export function BvbMenu() {
   const enterFanModus = () => dispatch({ type: 'NAVIGATE', screen: active ? (session.matchPhase === 'pre-match' ? 'kickoff' : session.matchPhase) : 'intro' });
   const tabs = [[Newspaper, 'News'], [Shirt, 'Squad'], [CalendarDays, 'Fixtures'], [Shirt, 'My BVB'], [Menu, 'More']];
   return <div className="screen menu-screen matchday-menu">
-    <MatchHeader phase="MATCHDAY"/>
+    <MatchdayMatchup/>
     <h1>MATCHDAY<br/>GAMES</h1>
     <div className="matchday-tiles">
       <button onClick={() => setPreview('Starting XI prediction')}><Shirt size={34}/><span>Starting XI prediction</span></button>
@@ -55,18 +55,5 @@ export function Prizes() {
     <button className="text-button all-prizes-button" onClick={() => setAllPrizes(true)}>SEE ALL PRIZES</button>
     <div className="bottom-actions"><button className="editorial-cta" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'activation' })}>GET MATCH READY <ArrowRight size={35}/></button></div>
     {allPrizes && <Modal title="MATCHDAY REWARDS" onClose={closePrizes}><div className="all-prizes-list">{[['jersey', 'Signed BVB jersey'], ['tickets', 'Match tickets'], ['merch', 'Exclusive BVB merchandise']].map(([name, label]) => <div key={name}><Asset name={name}/><h2>{label}</h2></div>)}<p className="fine-print">Illustrative prizes. No real prize draw takes place in this prototype.</p><Button onClick={() => setAllPrizes(false)}>BACK TO PRIZES</Button></div></Modal>}
-  </div>;
-}
-
-export function Activation({ onLocation, onActivate }) {
-  const { session } = useFanModus();
-  const allowed = session.locationPermission === 'granted';
-  return <div className="screen activation-screen reference-activation">
-    <div className="activation-title"><span>Activate</span><h1>Fan<span>Modus</span></h1></div>
-    <button className={`power-control ${allowed ? 'power-ready' : ''}`} onClick={onLocation} aria-label={allowed ? 'Stadium location confirmed. Review location.' : 'Enable simulated stadium location'}><Power size={125} strokeWidth={2}/></button>
-    <div className="activation-bottom"><div className="minute-entry-rule"><span>1 MINUTE</span><span>=</span><strong><Ticket size={47} strokeWidth={1.3}/>1 ENTRY</strong></div>
-    <button className="location-caption" onClick={onLocation}><MapPin size={13}/>{allowed ? 'Stadium confirmed · demo' : 'Enable stadium location'}</button>
-    <SwipeToActivate disabled={!allowed} onActivate={onActivate}/>
-    </div>
   </div>;
 }

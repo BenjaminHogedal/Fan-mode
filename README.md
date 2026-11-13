@@ -11,13 +11,12 @@ npm run dev
 
 Åbn [localhost:3000/?demo=1](http://localhost:3000/?demo=1).
 
-Demo-panelet åbnes med **DEMO** nederst til højre. Spring gennem kampens faser eller vælg **Set 86:32 / 86 entries** for et færdigt resultat. Ingen GPS, login eller backend er nødvendig.
+Demo-panelet åbnes med **DEMO** ved siden af mobilrammen på desktop. Panelet indeholder **Previous screen**, **Next screen** og **Reset flow**, som gennemgår flowet i rækkefølge. Ingen GPS, login eller backend er nødvendig.
 
 - `?demo=1`: vis demo-controls og automatisk deling fra takkesiden.
 - `?demo=0`: skjul demo-controls.
-- `?demo=1&variant=a`: minimal motion.
-- `?demo=1&variant=b`: balanced (standard).
-- `?demo=1&variant=c`: expressive.
+
+Animationer følger de implementerede designs; der er ingen A/B/C-varianter.
 
 Demo er som standard slået til under `npm run dev`. Produktionsvisning bruger `?demo=1` ved demonstration.
 

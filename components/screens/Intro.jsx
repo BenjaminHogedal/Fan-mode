@@ -5,7 +5,6 @@ import localFont from 'next/font/local';
 import { motion } from 'motion/react';
 import { useFanModus } from '@/context/FanModusContext';
 import { introAssets, introLayers } from '@/lib/intro-design';
-import StatusBar from '@/components/ui/StatusBar';
 import styles from './Intro.module.css';
 
 const introBody = localFont({ src: '../../public/fonts/intro-space-grotesk-variable.ttf', weight: '300 700', variable: '--font-intro-body', display: 'swap' });
@@ -38,7 +37,6 @@ export default function Intro() {
       <Layer name="fans" className={styles.fans}><Image src={introAssets.fans} alt="" fill sizes="630px" priority draggable={false}/></Layer>
       <button className={styles.clubBack} aria-label="Back to BVB menu" onClick={() => dispatch({ type: 'BACK' })} data-node-id="62:10152"><Image src={introAssets.bvb} alt="Borussia Dortmund" fill sizes="79px" priority/></button>
       <div className={styles.brand} data-node-id="64:10629"><Image src={introAssets.vodafone} alt="Vodafone" width={19} height={19}/><span>Fan<span>Modus</span></span></div>
-      <div className={styles.status}><StatusBar appearance="intro"/></div>
       <h1 className={styles.headline}>
         <Layer name="brushTop" as="span"><SvgAsset name="brushTop"/></Layer>
         <Layer name="brushMiddle" as="span"><SvgAsset name="brushMiddle"/></Layer>
