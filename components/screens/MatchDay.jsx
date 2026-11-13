@@ -1,12 +1,10 @@
 'use client';
 import { useEffect } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Check, LockKeyhole, Ticket } from 'lucide-react';
+import { Check, Ticket } from 'lucide-react';
 import { useFanModus } from '@/context/FanModusContext';
-import { formatTime } from '@/lib/fanmodus';
 import { motionSettings } from '@/lib/motion';
 import { Button, Eyebrow, Asset, MatchHeader } from '@/components/ui/Primitives';
-import DigitalTime from '@/components/ui/DigitalTime';
 import AnimatedCounter from '@/components/animations/AnimatedCounter';
 
 export function ActivationProgress() {
@@ -20,15 +18,6 @@ export function ActivationSuccess() {
   const { dispatch } = useFanModus();
   useEffect(() => { const id = setTimeout(() => dispatch({ type: 'NAVIGATE', screen: 'kickoff' }), 1800); return () => clearTimeout(id); }, [dispatch]);
   return <div className="screen centered"><motion.div className="success-symbol" initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}><Check size={70}/></motion.div><h1>FANMODUS<br/><span>ACTIVATED.</span></h1><p>You’re in. Now be here.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'kickoff' })}>LET’S GO</Button></div>;
-}
-export function ActiveHalf({ onLock }) {
-  const { session, seconds } = useFanModus();
-  const second = session.matchPhase === 'second';
-  return <div className="screen match-screen active-match"><div className="background-chevrons" aria-hidden="true">{Array.from({ length: 9 }, (_, i) => <span key={i}/>)}</div><MatchHeader phase={second ? 'SECOND HALF' : 'FIRST HALF'}/><div className="timer-block"><Eyebrow>PHONE-FREE TIME</Eyebrow><DigitalTime value={formatTime(seconds)}/></div><button className="lock-preview-link text-button" onClick={onLock}><LockKeyhole size={14}/> LOCK SCREEN PREVIEW</button></div>;
-}
-export function HalfTime() {
-  const { session, now, entries } = useFanModus();
-  return <div className="screen halftime-screen"><MatchHeader phase="HALF-TIME"/><div className="halftime-hero"><h1>HALF<br/>TIME</h1><div className="halftime-copy"><h2>FANMODUS PAUSED.</h2><p>YOUR {entries} ENTRIES ARE SAFE.<br/>EARNING RESUMES IN THE SECOND HALF.</p></div><Asset name="stadium"/></div><div className="break-countdown"><Eyebrow>THE SECOND HALF STARTS IN</Eyebrow><DigitalTime value={formatTime(Math.ceil(Math.max(0, session.phaseEndsAt - now) / 1000))}/></div></div>;
 }
 export function FullTime() {
   const { dispatch } = useFanModus();
