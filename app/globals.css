@@ -524,6 +524,7 @@ svg { flex-shrink: 0; }
 .app-shell[data-screen='activating'] .medium-title { font-size: 28px; line-height: 1.2; }
 .app-shell[data-screen='activating'] .medium-title br { display: none; }
 .app-shell[data-screen='activating'] .medium-title span { color: var(--color-offwhite); }
+
 @media(max-width: 374px) and (pointer: coarse) {
   .intro-brush-title h1 { font-size: 50px; }
   .prizes-title h1 { font-size: 69px; }
@@ -551,3 +552,180 @@ svg { flex-shrink: 0; }
 @media (hover: hover) and (pointer: fine) {
   .modal-backdrop { padding: 70px 0 16px; }
 }
+
+/* Figma frame 324:1044, 390 × 844. Values below follow its node bounds. */
+.app-shell[data-screen='menu'] .matchday-menu {
+  position: relative;
+  display: block;
+  flex: 0 0 800px;
+  width: 390px;
+  height: 800px;
+  min-height: 800px;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+.app-shell[data-screen='menu'] > .screen-back {
+  top: 54px;
+  left: 3px;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  opacity: 1;
+  color: #fde100;
+}
+.app-shell[data-screen='menu'] > .screen-back > img {
+  width: 20px;
+  height: 17px;
+}
+.matchday-menu > .slot { position: absolute; top: 0; left: 0; height: 43px; }
+.matchday-menu h1 {
+  position: absolute;
+  top: 62px;
+  left: 0;
+  width: 390px;
+  height: 75px;
+  margin: 0;
+  color: #fde100;
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: normal;
+  text-align: center;
+}
+.matchday-menu h1 span { position: absolute; display: block; color: inherit; white-space: nowrap; }
+.matchday-menu h1 span:first-child { top: 0; left: 90px; width: 211px; height: 41px; font-size: 29px; line-height: normal; }
+.matchday-menu h1 span:last-child { top: 31px; left: 134px; width: 123px; height: 44px; font-size: 31px; line-height: normal; }
+.matchday-tiles {
+  position: absolute;
+  top: 146px;
+  left: 0;
+  display: block;
+  width: 390px;
+  height: 355px;
+  margin: 0;
+}
+.matchday-tiles > .matchday-tile {
+  position: absolute;
+  display: block;
+  width: 173px;
+  height: 172px;
+  min-width: 0;
+  aspect-ratio: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #242424;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  text-align: initial;
+}
+.matchday-tiles > .matchday-tile:hover { background: #242424; }
+.lineup-tile { left: 17px; top: 0; }
+.polls-tile { left: 200px; top: 0; }
+.fanmodus-tile { left: 17px; top: 183px; }
+.matchday-tile > img { position: absolute; display: block; max-width: none; }
+.matchday-tile > .tile-background { top: 0; left: 0; width: 173px; height: 172px; }
+.matchday-tile > .shirt-art { top: 43px; left: 62px; width: 32px; height: 36px; }
+.matchday-tile > .shirt-detail { top: 44px; left: 71px; width: 13px; height: 10px; }
+.matchday-tile .tile-label {
+  position: absolute;
+  top: 88px;
+  left: 43px;
+  width: 87px;
+  height: 18px;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  white-space: nowrap;
+}
+.matchday-tile > .poll-art { top: 44px; left: 66px; width: 38px; height: 31px; }
+.matchday-tile > .poll-tail { top: 75px; left: 73px; width: 9px; height: 9px; }
+.poll-question { position: absolute; top: 46px; left: 75px; width: 20px; height: 24px; color: #242424; font: 700 21px/normal Arial, Helvetica, sans-serif; text-align: center; }
+.poll-label { position: absolute; top: 86px; left: 34px; width: 105px; height: 18px; color: #fff; font: 400 16px/normal Arial, Helvetica, sans-serif; text-align: center; white-space: nowrap; }
+.poll-label-second { top: 107px; left: 68px; width: 36px; }
+.matchday-tile > .phone-body { top: 39.7px; left: 68.7px; width: 19.6px; height: 31.6px; }
+.matchday-tile > .phone-speaker { top: 44px; left: 74px; width: 9px; height: 2px; }
+.matchday-tile > .phone-dot { top: 63.8px; left: 76.8px; width: 3.4px; height: 3.4px; }
+.matchday-tile > .phone-slash { top: 33.5px; left: 62.5px; width: 33px; height: 44px; }
+.matchday-tile > .vodafone-icon { top: 95px; left: 47px; width: 20px; height: 20px; }
+.matchday-tile > .vodafone-symbol { top: 99px; left: 49.2px; width: 15px; height: 13px; }
+.vodafone-label { position: absolute; top: 97px; left: 72px; width: 54px; height: 15px; color: #fff; font: 400 13px/normal Arial, Helvetica, sans-serif; white-space: nowrap; }
+.matchday-tile .fanmodus-label { position: absolute; top: 118px; left: 43px; width: 86px; height: 21px; color: #fff; font: 400 18px/normal Arial, Helvetica, sans-serif; text-align: center; white-space: nowrap; }
+.bvb-tab-bar {
+  position: absolute;
+  z-index: 2;
+  top: 720px;
+  left: 0;
+  display: block;
+  width: 390px;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  color: #101010;
+}
+.bvb-tab-bar > img { position: absolute; display: block; max-width: none; pointer-events: none; }
+.bvb-tab-bar > .tab-bar-background { top: 0; left: 0; width: 390px; height: 80px; }
+.bvb-tab-bar > .active-tab-background { top: 10px; left: 155px; width: 80px; height: 58px; }
+.bvb-tab-bar > .tab-button {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 78px;
+  height: 72px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #101010;
+}
+.bvb-tab-bar > .tab-button:hover { background: transparent; }
+.bvb-tab-bar > button[aria-current='page'] { background: transparent; }
+.bvb-tab-bar > .news-button { left: 0; }
+.bvb-tab-bar > .squad-button { left: 78px; }
+.bvb-tab-bar > .fixtures-button { left: 156px; }
+.bvb-tab-bar > .my-bvb-button { left: 234px; }
+.bvb-tab-bar > .more-button { left: 312px; }
+.tab-button > img { position: absolute; display: block; max-width: none; }
+.news-button > .news-icon { top: 14px; left: 30px; width: 22px; height: 25px; }
+.news-button > .news-rule { left: 34.3px; width: 13.4px; height: 1.4px; }
+.news-button > .news-rule-1 { top: 19.3px; }
+.news-button > .news-rule-2 { top: 23.3px; }
+.news-button > .news-rule-3 { top: 27.3px; }
+.news-button > .news-rule-4 { top: 31.3px; }
+.squad-button > .squad-icon { top: 13px; left: 26px; width: 31px; height: 27px; }
+.squad-number { position: absolute; top: 19px; left: 37px; width: 9px; height: 9px; color: #fde100; font: 700 8px/normal Arial, Helvetica, sans-serif; text-align: center; }
+.fixtures-button > .fixtures-icon { top: 16px; left: 26px; width: 26px; height: 27px; }
+.fixtures-button > .fixtures-inner-icon { top: 22px; left: 32px; width: 14px; height: 15px; }
+.fixtures-number { position: absolute; top: 20px; left: 35px; width: 8px; height: 15px; color: #111; font: 700 13px/normal Arial, Helvetica, sans-serif; text-align: center; }
+.my-bvb-button > .my-bvb-icon { top: 10.7px; left: 25.7px; width: 33.6px; height: 31.6px; }
+.my-bvb-button > .my-bvb-neck { top: 13px; left: 35px; width: 14px; height: 9px; }
+.more-button > .more-line { left: 24.5px; width: 23px; height: 3px; }
+.more-button > .more-line-1 { top: 15.5px; }
+.more-button > .more-line-2 { top: 22.5px; }
+.more-button > .more-line-3 { top: 29.5px; }
+.tab-button > .tab-label {
+  position: absolute;
+  top: 46px;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  color: #101010;
+  font: 400 12px/normal Arial, Helvetica, sans-serif;
+  text-align: center;
+  white-space: nowrap;
+}
+.news-button > .tab-label { left: 26px; width: 31px; }
+.squad-button > .tab-label { left: 25px; width: 33px; }
+.fixtures-button > .tab-label { left: 14px; width: 50px; color: #fde100; }
+.my-bvb-button > .tab-label { left: 15px; width: 54px; }
+.more-button > .tab-label { left: 22px; width: 28px; }
+.bvb-tab-bar > .home-indicator { top: 72px; left: 138px; width: 114px; height: 4px; }
