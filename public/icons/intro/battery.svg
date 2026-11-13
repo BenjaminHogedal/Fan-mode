@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="27" height="14" viewBox="0 0 27 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="iOS 17 - Battery" clip-path="url(#clip0_0_97)">
+<rect id="border" opacity="0.4" x="0.25" y="0.25" width="23.5" height="13.5" rx="4.75" stroke-width="0.5" stroke="white"/>
+<rect id="indicator" x="2" y="2" width="20" height="10" rx="3" fill="white"/>
+<path id="cap" opacity="0.4" d="M25 4.99999C25.5304 4.99999 26.0391 5.22826 26.4142 5.63459C26.7893 6.04092 27 6.59202 27 7.16666C27 7.74129 26.7893 8.29239 26.4142 8.69872C26.0391 9.10505 25.5304 9.33332 25 9.33332V4.99999Z" fill="white"/>
+<g id="Rectangle 1">
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_97">
+<rect width="27" height="14" fill="white"/>
+</clipPath>
+</defs>
+</svg>

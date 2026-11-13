@@ -31,16 +31,6 @@ export function BvbMenu() {
   </div>;
 }
 
-export function Intro() {
-  const { dispatch } = useFanModus();
-  return <div className="screen intro-screen reference-intro">
-    <Asset name="stand" className="scene-backdrop"/>
-    <div className="intro-branding"><Asset name="bvb"/><FanModusWordmark/></div>
-    <div className="intro-brush-title"><h1><span>90 MINUTES</span><span>WITHOUT</span><span>YOUR PHONE.</span></h1><div className="scribble-underline" aria-hidden="true"/></div>
-    <div className="intro-bottom"><p>Be part of the atmosphere,<br/>stay present and win<br/>exclusive prizes.</p><svg className="handdrawn-arrow" viewBox="0 0 90 110" fill="none" aria-hidden="true"><path d="M7 5c75-13 85 59 33 83m-2-20 1 24 23-9M8 9c65-7 80 54 38 72" stroke="currentColor" strokeWidth="2"/></svg><button className="paper-button" onClick={() => dispatch({ type: 'NAVIGATE', screen: 'how' })}>GET STARTED</button></div>
-  </div>;
-}
-
 export function HowItWorks() {
   const { dispatch } = useFanModus();
   const steps = [['ACTIVATE', 'AT THE STADIUM', 'Turn on FanModus when you are at Westfalenstadion.'], ['KEEP IT AWAY', null, 'Leave your phone in your pocket.'], ['COLLECT ENTRIES', null, 'Earn entries for every phone-free minute.']];

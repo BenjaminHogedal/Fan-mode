@@ -1,0 +1,10 @@
+.bar { display: flex; align-items: center; justify-content: space-between; height: 54px; width: 390px; padding: 16px 32px 16px 44px; color: #fff; }
+.time { width: 49px; flex: none; text-align: center; font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif; font-size: 17px; font-weight: 700; line-height: normal; letter-spacing: 0; }
+.icons { display: flex; align-items: center; justify-content: center; gap: 8.5px; width: 80px; flex: none; }
+.icons img { display: block; flex: none; max-width: none; }
+.signal { position: relative; width: 19px; height: 11px; flex: none; display: block; }
+.signal i { position: absolute; bottom: 0; width: 3.5px; background: #fff; border-radius: 1px; }
+.signal i:nth-child(1) { height: 5px; left: 0; }
+.signal i:nth-child(2) { height: 7px; left: 5px; }
+.signal i:nth-child(3) { height: 9px; left: 10px; }
+.signal i:nth-child(4) { height: 11px; left: 15px; }
