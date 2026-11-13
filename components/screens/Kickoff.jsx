@@ -11,7 +11,7 @@ const digital = localFont({ src: '../../public/fonts/kickoff-digital-numbers.ttf
 const inter = localFont({ src: '../../public/fonts/kickoff-inter-variable.ttf', weight: '100 900', variable: '--font-kickoff-body', display: 'swap' });
 
 /** Figma 43:10124; the session clock remains the source of truth. */
-export default function Kickoff({ onLock }) {
+export default function Kickoff({ onNext }) {
   const { session, now } = useFanModus();
   const remaining = Math.max(0, Math.ceil((session.phaseEndsAt - now) / 1000));
   return <FigmaScreen nodeId="43:10124" label="Countdown to kick-off"><div className={`${digital.variable} ${inter.variable}`}>
@@ -20,6 +20,6 @@ export default function Kickoff({ onLock }) {
     <h1 className={styles.title}>Kickoff in</h1>
     <div className={styles.timer} role="timer" aria-label={`${formatTime(remaining)} until kick-off`}>{formatTime(remaining)}</div>
     <p className={styles.hint}>But you dont have to wait untill kick-off to put your phone away.</p>
-    <button type="button" className={styles.lock} onClick={onLock} aria-label="Preview lock screen"/>
+    <button type="button" className={styles.advance} onClick={onNext} aria-label="Continue to first half"/>
   </div></FigmaScreen>;
 }

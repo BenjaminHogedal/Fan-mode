@@ -1,0 +1,10 @@
+.progress, .success { position: absolute; overflow: hidden; pointer-events: none; }
+.progress { left: 60px; top: 235px; width: 270px; height: 243px; }
+.success { left: 26px; top: 172px; width: 337.5px; height: 377.5px; }
+.progress img, .success img { position: absolute; display: block; left: 0; width: 100%; max-width: none; }
+.progress img { top: -18.21%; height: 138.89%; }
+.success img { top: 0; height: 111.75%; }
+.caption { position: absolute; left: 0; top: 445px; width: 390px; margin: 0; font-size: 24px; font-weight: 600; line-height: 65px; text-align: center; color: #fff; }
+.caption span { color: #fde100; }
+.reduced { position: absolute; top: 350px; width: 100%; text-align: center; color: #fde100; font-size: 24px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

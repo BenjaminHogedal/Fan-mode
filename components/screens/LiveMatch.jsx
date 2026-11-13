@@ -9,7 +9,7 @@ import styles from './LiveMatch.module.css';
 
 const digital = localFont({ src: '../../public/fonts/kickoff-digital-numbers.ttf', weight: '400', variable: '--font-match-digital', display: 'swap' });
 
-export function ActiveHalf({ onLock }) {
+export function ActiveHalf({ onNext }) {
   const { session, seconds } = useFanModus();
   const second = session.matchPhase === 'second';
   return <FigmaScreen nodeId={second ? '44:10137' : '153:66'} label={second ? 'Second half' : 'First half'}><div className={digital.variable}>
@@ -17,7 +17,7 @@ export function ActiveHalf({ onLock }) {
     <MatchChrome/>
     <h1 className={styles.title}>phone free time</h1>
     <div className={styles.timer} role="timer" aria-label={`${formatTime(seconds)} phone-free time`}>{formatTime(seconds)}</div>
-    <button type="button" className={styles.lock} onClick={onLock} aria-label="Preview lock screen"/>
+    <button type="button" className={styles.advance} onClick={onNext} aria-label={second ? 'Continue to full time' : 'Continue to half-time'}/>
   </div></FigmaScreen>;
 }
 

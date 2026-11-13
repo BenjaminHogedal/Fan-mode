@@ -729,3 +729,14 @@ svg { flex-shrink: 0; }
 .my-bvb-button > .tab-label { left: 15px; width: 54px; }
 .more-button > .tab-label { left: 22px; width: 28px; }
 .bvb-tab-bar > .home-indicator { top: 72px; left: 138px; width: 114px; height: 4px; }
+
+/* Figma activation animations use the full canvas beneath shared status chrome. */
+.app-shell:is([data-screen='activating'], [data-screen='activated']) > main { padding-top: 0; }
+.app-shell:is([data-screen='activating'], [data-screen='activated']) .screen-container { min-height: var(--app-height, 100dvh); }
+.app-shell:is([data-screen='activating'], [data-screen='activated']) > .screen-back { display: none; }
+
+/* Full-time and entry collection follow the full-canvas Figma sequence. */
+.app-shell:is([data-screen='fulltime'], [data-screen='collecting']) > main { padding-top: 0; }
+.app-shell:is([data-screen='fulltime'], [data-screen='collecting']) .screen-container { min-height: var(--app-height, 100dvh); }
+.app-shell:is([data-screen='fulltime'], [data-screen='collecting']) > .screen-back { display: none; }
+.app-shell[data-screen='fulltime'][data-overlay='false'] > .app-header { background: transparent; }

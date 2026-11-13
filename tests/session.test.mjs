@@ -54,3 +54,24 @@ test('86:32 preset freezes a consistent result even when called during a live ha
   assert.equal(preset.matchPhase, 'finished');
   assert.equal(elapsedSeconds(preset, start + 9999999), 5192);
 });
+
+test('screen taps advance match phases and restart the next phase clock at the current time', () => {
+  const activated = reduce({ ...initialSession, locationPermission: 'granted' }, 'ACTIVATED');
+  const countdown = reduce(activated, 'NAVIGATE', { screen: 'kickoff' });
+  const first = reduce(countdown, 'ADVANCE_MATCH');
+  assert.equal(first.currentScreen, 'first');
+  assert.equal(first.matchPhase, 'first');
+  assert.equal(first.phaseEndsAt, start + 2700000);
+  assert.equal(first.phoneFreeSeconds, 0);
+  const half = reduce(first, 'ADVANCE_MATCH');
+  assert.equal(half.currentScreen, 'halftime');
+  assert.equal(half.phaseEndsAt, start + 900000);
+  assert.equal(half.phoneFreeSeconds, 2700);
+  const second = settle(half, half.phaseEndsAt);
+  const finished = reduce(second, 'ADVANCE_MATCH');
+  assert.equal(finished.currentScreen, 'fulltime');
+  assert.equal(finished.matchPhase, 'finished');
+  assert.equal(finished.phoneFreeSeconds, 5400);
+  assert.equal(finished.phaseEndsAt, null);
+  assert.equal(reduce(finished, 'ADVANCE_MATCH'), finished);
+});
