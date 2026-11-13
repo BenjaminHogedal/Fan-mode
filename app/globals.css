@@ -740,3 +740,20 @@ svg { flex-shrink: 0; }
 .app-shell:is([data-screen='fulltime'], [data-screen='collecting']) .screen-container { min-height: var(--app-height, 100dvh); }
 .app-shell:is([data-screen='fulltime'], [data-screen='collecting']) > .screen-back { display: none; }
 .app-shell[data-screen='fulltime'][data-overlay='false'] > .app-header { background: transparent; }
+
+/* Full-screen Figma loading/error frames, with the persistent status bar above. */
+.modal-backdrop:has(.state-modal) { padding: 0; background: #000; backdrop-filter: none; align-items: center; }
+.state-modal { padding: 0; border: 0; background: #000; max-height: none; box-shadow: none; overflow: hidden; }
+.state-modal > .modal-top { display: none; }
+.app-shell[data-state-preview='true'] > .screen-back { display: none; }
+.demo-toolbar { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.demo-toolbar > button { border-radius: 5px; font-family: var(--font-label), sans-serif; white-space: nowrap; }
+.demo-toolbar > .demo-toggle { min-height: 38px; padding: 8px 12px; border: 1px solid #fde100; background: #fde100; color: #000; font-size: 13px; font-weight: 700; }
+.demo-toolbar > button:not(.demo-toggle) { align-self: flex-start; min-height: 26px; padding: 3px 8px; border: 1px solid #333; background: #141414; color: #aaa; font-size: 11px; letter-spacing: 0; }
+.demo-toolbar > button:not(.demo-toggle):hover { border-color: #777; color: #f2efe5; }
+.demo-toolbar > .demo-toggle:hover { background: #e8ce00; }
+@media (hover: none), (pointer: coarse), (max-width: 600px) {
+  .demo-toolbar { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .preview-tools:has(.demo-toolbar) { max-width: calc(100vw - 16px); }
+  .demo-toolbar > button:not(.demo-toggle) { min-height: 28px; padding: 4px 7px; }
+}

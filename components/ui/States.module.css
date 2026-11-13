@@ -1,0 +1,58 @@
+.stadium { position: absolute; left: 24px; top: 218px; width: 342px; height: 360px; }
+.rim { position: absolute; left: 47px; top: 30px; width: 248px; height: 164px; border: 1px solid #c4a900; border-radius: 64px; opacity: .45; }
+.pitch, .penaltyLeft, .penaltyRight { position: absolute; border: 1.5px solid #f2efe5; opacity: .8; }
+.pitch { left: 91px; top: 70px; width: 160px; height: 84px; border-radius: 4px; }
+.midline { position: absolute; left: 170.25px; top: 70px; width: 1.5px; height: 84px; background: #f2efe5; opacity: .8; }
+.circle { position: absolute; left: 154px; top: 95px; }
+.penaltyLeft, .penaltyRight { top: 91px; width: 22px; height: 42px; }
+.penaltyLeft { left: 91px; } .penaltyRight { left: 229px; }
+.stand { position: absolute; display: flex; opacity: .18; }
+.stand i { display: block; flex: none; border-radius: 3px; background: #fde100; }
+.north, .south { left: 100px; gap: 5px; }
+.north { top: 43px; opacity: 1; } .south { top: 167px; }
+.north i, .south i { width: 16px; height: 12px; }
+.east, .west { top: 64px; flex-direction: column; gap: 4px; }
+.east { left: 268px; } .west { left: 62px; }
+.east i, .west i { width: 12px; height: 10px; }
+.loadingTitle { position: absolute; left: 16px; top: 218px; width: 310px; margin: 0; font-family: var(--font-display), sans-serif; font-size: 38px; font-weight: 400; line-height: normal; text-align: center; }
+.loadingCopy { position: absolute; left: 16px; top: 272px; width: 310px; margin: 0; font-size: 14px; line-height: normal; text-align: center; }
+.indicators { position: absolute; left: 143px; top: 318px; display: flex; gap: 5px; }
+.indicators i { width: 10px; height: 4px; border-radius: 2px; background: #fde100; opacity: .25; }
+.indicators i:first-child { opacity: 1; }
+.dismissLoading { position: absolute; inset: 0; width: 390px; height: 844px; background: transparent; }
+.dismissLoading:focus-visible { outline: 2px solid #fde100; outline-offset: -5px; }
+.illustration { position: absolute; overflow: hidden; pointer-events: none; }
+.illustration img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.seated { left: 82.5935px; top: 255px; width: 224.813px; height: 246px; }
+.standing { left: 85px; top: 218px; width: 220px; height: 293px; }
+.ticket { left: 75.5px; top: 252px; width: 239px; height: 246px; }
+.ticket img { position: absolute; left: -218.41%; top: -108.13%; width: 321.34%; height: 208.13%; }
+.errorText { position: absolute; left: 0; top: 555px; width: 390px; height: 131.75px; color: #fff; font-family: var(--font-display), sans-serif; }
+.errorHeading { height: 67.5px; display: flex; gap: 16.25px; align-items: center; justify-content: center; }
+.errorHeading h1 { margin: 0; font-family: inherit; font-size: 30px; font-weight: 400; line-height: normal; white-space: nowrap; }
+.errorText > p { position: absolute; left: 0; top: 83.88px; width: 390px; margin: 0; text-align: center; white-space: pre-line; font-size: 20px; line-height: normal; }
+.retry { position: absolute; left: 48px; top: 706.1775px; width: 294px; height: 84px; padding: 20px 42px 14px 43px; transform: rotate(-4.91deg); display: flex; align-items: center; justify-content: center; background: transparent; color: #000; }
+.retry img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.retry span { position: relative; font-family: var(--font-display), sans-serif; font-size: 42px; font-weight: 400; line-height: normal; white-space: nowrap; }
+
+.stand, .indicators i { transition: opacity 280ms ease-in-out; }
+@media (prefers-reduced-motion: reduce) { .stand, .indicators i { transition: none; } }
+
+/* Figma icon variants: 1 ms hold, then a 1 s linear dissolve each way. */
+.blinkIcon { position: relative; display: block; flex: none; }
+.alertIcon { width: 54px; height: 54px; }
+.wifiIcon { width: 67.5px; height: 67.5px; }
+.blinkDefault, .blinkDim { position: absolute; inset: 0; }
+.blinkDefault { animation: icon-default 2002ms linear infinite; }
+.blinkDim { opacity: 0; animation: icon-dim 2002ms linear infinite; }
+@keyframes icon-default {
+  0%, 0.04995%, 100% { opacity: 1; }
+  50%, 50.04995% { opacity: 0; }
+}
+@keyframes icon-dim {
+  0%, 0.04995%, 100% { opacity: 0; }
+  50%, 50.04995% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blinkDefault, .blinkDim { animation: none; }
+}
