@@ -21,11 +21,6 @@ export function ActivationSuccess() {
   useEffect(() => { const id = setTimeout(() => dispatch({ type: 'NAVIGATE', screen: 'kickoff' }), 1800); return () => clearTimeout(id); }, [dispatch]);
   return <div className="screen centered"><motion.div className="success-symbol" initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}><Check size={70}/></motion.div><h1>FANMODUS<br/><span>ACTIVATED.</span></h1><p>You’re in. Now be here.</p><Button onClick={() => dispatch({ type: 'NAVIGATE', screen: 'kickoff' })}>LET’S GO</Button></div>;
 }
-export function Kickoff({ onLock }) {
-  const { session, now } = useFanModus();
-  const remaining = Math.max(0, Math.ceil((session.phaseEndsAt - now) / 1000));
-  return <div className="screen match-screen"><MatchHeader phase="WESTFALENSTADION · MATCHDAY 12"/><div className="timer-block"><Eyebrow>UNTIL KICK-OFF</Eyebrow><DigitalTime value={formatTime(remaining)}/><h1 className="medium-title">KICK-OFF IS<br/><span>GETTING CLOSER.</span></h1><p>You don’t have to wait until kick-off.<br/>Put your phone away whenever you’re ready.</p></div><Asset name="stadium"/><div className="bottom-actions"><Button onClick={onLock} secondary><LockKeyhole size={18}/> PREVIEW LOCK SCREEN</Button><p className="fine-print">Your entries start counting at kick-off.</p></div></div>;
-}
 export function ActiveHalf({ onLock }) {
   const { session, seconds } = useFanModus();
   const second = session.matchPhase === 'second';
