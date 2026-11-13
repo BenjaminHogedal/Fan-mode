@@ -1,0 +1,39 @@
+/* Only frame 41:10112. Its layered artwork uses Figma's native 390 × 844 coordinates. */
+.viewport {
+  position: relative;
+  width: 100%;
+  flex: none;
+  height: calc(844px * var(--intro-scale, 1));
+  overflow: clip;
+  background: var(--color-black);
+}
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 844px;
+  transform: scale(var(--intro-scale, 1));
+  transform-origin: top left;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--color-black);
+  color: #fff;
+}
+.layer { position: absolute; top: 0; left: 0; transform-origin: top left; }
+.svgAsset { display: block; max-width: none; pointer-events: none; }
+.fans { opacity: .25; }
+.fans img { object-fit: cover; }
+.clubBack { position: absolute; left: 22px; top: 41px; width: 78.4px; height: 78.4px; padding: 0; z-index: 2; }
+.clubBack img { object-fit: cover; }
+.brand { position: absolute; top: 64px; left: 140px; width: 143px; height: 31px; display: flex; align-items: center; gap: 4px; font-family: var(--font-intro-body), sans-serif; font-size: 24px; font-weight: 400; line-height: 31px; letter-spacing: 0; white-space: nowrap; }
+.brand > img { flex: none; }
+.brand > span > span { color: var(--color-red); }
+.status { position: absolute; top: 0; left: 0; width: 390px; height: 54px; z-index: 3; pointer-events: none; }
+.headline { margin: 0; font-family: var(--font-display), sans-serif; font-weight: 400; font-size: 57.6px; line-height: 69px; letter-spacing: 0; color: #000; }
+.headlineText { display: flex; align-items: center; justify-content: center; color: #000; font-size: inherit; line-height: inherit; white-space: nowrap; }
+.description { position: absolute; left: 76px; top: 561.475952px; width: 238px; margin: 0; font-family: var(--font-intro-body), sans-serif; font-size: 18px; font-weight: 500; line-height: 23px; letter-spacing: 0; color: #fff; }
+.cta { position: relative; display: flex; align-items: center; justify-content: center; width: 294px; height: 84px; padding: 20px 42px 14px 43px; background: none; color: #000; border: 0; border-radius: 0; font-family: var(--font-display), sans-serif; font-size: 42px; font-weight: 400; line-height: 50px; letter-spacing: 0; white-space: nowrap; }
+.cta img { object-fit: cover; pointer-events: none; }
+.cta > span { position: relative; }
+.cta:focus-visible { outline-offset: 3px; }

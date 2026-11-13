@@ -541,3 +541,8 @@ svg { flex-shrink: 0; }
   .reference-step { grid-template-columns: 50px 1fr; gap: 12px; }
   .reference-step h2 { font-size: 25px; }
 }
+
+/* Intro 41:10112 owns its exact full-frame header; all other screens keep theirs. */
+.app-shell[data-screen='intro'] > .app-header,
+.app-shell[data-screen='intro'] > .screen-back { display: none; }
+.app-shell[data-screen='intro'] .screen-container { min-height: var(--app-height, 100dvh); }
