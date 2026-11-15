@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useReducer, useState } from 'reac
 import { initialSession, sessionReducer, restoreSession, elapsedSeconds, STORAGE_KEY } from '@/lib/fanmodus';
 
 const FanModusContext = createContext(null);
-export function FanModusProvider({ children }) {
+export function FanModusProvider({ children, match }) {
   const [session, dispatch] = useReducer(sessionReducer, initialSession);
   const [ready, setReady] = useState(false);
   const [now, setNow] = useState(0);
@@ -32,6 +32,6 @@ export function FanModusProvider({ children }) {
     return () => { clearInterval(interval); document.removeEventListener('visibilitychange', tick); };
   }, [ready]);
   const seconds = elapsedSeconds(session, now);
-  return <FanModusContext.Provider value={{ session, dispatch, ready, now, seconds, entries: Math.floor(seconds / 60), storageWarning }}>{children}</FanModusContext.Provider>;
+  return <FanModusContext.Provider value={{ session, dispatch, ready, now, seconds, entries: Math.floor(seconds / 60), storageWarning, match }}>{children}</FanModusContext.Provider>;
 }
 export const useFanModus = () => useContext(FanModusContext);
