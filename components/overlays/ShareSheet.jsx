@@ -7,14 +7,14 @@ import styles from './ShareSheet.module.css';
 import { useFanModus } from '@/context/FanModusContext';
 import { createMatchImage, downloadImage } from '@/lib/share';
 export default function ShareSheet({ onClose }) {
-  const { seconds, entries } = useFanModus();
+  const { seconds, entries, match } = useFanModus();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   async function exportImage(share) {
     if (busy) return;
     setBusy(true); setMessage('Preparing your matchday image…');
     try {
-      const blob = await createMatchImage(seconds, entries);
+      const blob = await createMatchImage(seconds, entries, match);
       const file = new File([blob], 'FanModus-matchday.png', { type: 'image/png' });
       if (share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file], title: 'My FanModus matchday', text: 'Be here. Be Borussia.' });

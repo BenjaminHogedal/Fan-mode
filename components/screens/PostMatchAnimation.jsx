@@ -13,7 +13,7 @@ const stages = {
 };
 
 export default function PostMatchAnimation({ stage }) {
-  const { dispatch } = useFanModus();
+  const { dispatch, match } = useFanModus();
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -28,10 +28,10 @@ export default function PostMatchAnimation({ stage }) {
   return <FigmaScreen nodeId={animation.nodeId} label={animation.label}>
     {fulltime && <>
       <div className={styles.gradient} data-node-id="164:157"/>
-      <div className={styles.match} aria-label="Borussia Dortmund versus SC Freiburg">
+      <div className={styles.match} aria-label={`Borussia Dortmund versus ${match.opponent_name}`}>
         <Image src="/images/post-match/bvb.png" alt="Borussia Dortmund" width={31} height={31} priority/>
         <span>VS</span>
-        <Image src="/images/post-match/freiburg.png" alt="SC Freiburg" width={31} height={31} priority/>
+        <Image src={match.opponent_logo} alt={match.opponent_name} width={31} height={31} priority unoptimized/>
       </div>
     </>}
     {!reduced && !failed && <div className={styles[stage]} data-node-id={animation.imageNodeId}>
