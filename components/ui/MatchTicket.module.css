@@ -15,13 +15,13 @@
   top: 191.98345px;
 }
 
-.score {
-  position: absolute;
-  left: 66px;
-  top: 214.87px;
-  width: 198px;
-  height: 67px;
-}
+ .score {
+     position: absolute;
+     left: 66px;
+     top: 214.87px;
+     width: 198px;
+     height: 67px;
+   }
 
 .score img {
   position: absolute;
