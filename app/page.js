@@ -6,11 +6,13 @@ import DesktopViewport from '@/components/ui/DesktopViewport';
 import { supabase } from '@/lib/supabase';
 
 async function MatchData() {
+  let match = null;
+  let matchError;
   try {
     await connection();
     if (!supabase) throw new Error('Supabase environment variables are missing.');
 
-    const { data: match, error } = await supabase
+    const { data, error } = await supabase
       .from('matches')
       .select('id, opponent_name, opponent_short, opponent_logo, kickoff, stadium, home_score, away_score')
       .gte('kickoff', new Date().toISOString())
@@ -19,14 +21,12 @@ async function MatchData() {
       .maybeSingle();
 
     if (error) throw error;
-    if (!match) {
-      return <FanModusApp match={null} matchError="No upcoming matches found." />;
-    }
-
-    return <FanModusApp match={match} />;
+    match = data;
+    if (!match) matchError = 'No upcoming matches found.';
   } catch {
-    return <FanModusApp match={null} matchError="Could not load match data. Please try again." />;
+    matchError = 'Could not load match data. Please try again.';
   }
+  return <FanModusApp match={match} matchError={matchError} />;
 }
 
 export default function Home() {

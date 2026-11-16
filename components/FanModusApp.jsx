@@ -27,8 +27,9 @@ import ShareSheet from './overlays/ShareSheet';
 import DemoControls from './overlays/DemoControls';
 import LocationDialog from './overlays/LocationDialog';
 
-export default function FanModusApp({ match, matchError }) { return <FanModusProvider match={match}><SoundProvider><MotionConfig reducedMotion="user"><DesktopViewport><AppContent matchError={matchError}/></DesktopViewport></MotionConfig></SoundProvider></FanModusProvider>; }
-export default function FanModusApp({ match, matchError }) { return <FanModusProvider match={match}><MotionConfig reducedMotion="user"><AppContent matchError={matchError}/></MotionConfig></FanModusProvider>; }
+export default function FanModusApp({ match, matchError }) {
+  return <FanModusProvider match={match}><SoundProvider><MotionConfig reducedMotion="user"><AppContent matchError={matchError}/></MotionConfig></SoundProvider></FanModusProvider>;
+}
 function AppContent({ matchError }) {
   const { session, dispatch, ready, storageWarning, match } = useFanModus();
   const [overlay, setOverlay] = useState(null);
