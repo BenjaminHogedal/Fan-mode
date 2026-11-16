@@ -780,3 +780,9 @@ svg { flex-shrink: 0; }
 .app-shell[data-screen='prize'] > .screen-back { display: none; }
 
 .screen-transition-viewport { overflow-x: clip; }
+.demo-toolbar > button.demo-win { margin-top: 5px; border-color: #fde10080; color: #fde100; background: #fde10012; }
+@media (hover: none), (pointer: coarse) {
+  .preview-tools:has(.demo-win) { position: relative; inset: auto; transform: none; width: calc(100% - 24px); margin: 12px auto; padding-bottom: env(safe-area-inset-bottom); }
+  .preview-tools:has(.demo-win) .demo-toggle { position: static; }
+  .demo-toolbar > button.demo-win { flex-basis: 100%; }
+}
