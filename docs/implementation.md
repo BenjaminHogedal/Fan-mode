@@ -1,69 +1,111 @@
-# Implementeringsrapport
+# Implementering og begrænsninger
 
-## Leveret
+## Nuværende funktionalitet
 
-Hele prototypen er implementeret i det eksisterende JavaScript/App Router-projekt med engelske UI-tekster. Flow: BVB-menu → introduktion → How it works → præmier → lokation → swipe → aktivering → bekræftelse → kickoff → første halvleg → halvleg → anden halvleg → full time → optælling → resultat → tak → delingsvisning → præmieafsløring → menu.
+BVB FanModus er en interaktiv eksamensprototype med én App Router-side og et internt React-skærmflow:
 
-Derudover: loading, forbindelsesfejl, aktiveringsfejl, afvist lokation, retry, matchstatistik og låseskærmsmockup. Demo-panelet indeholder Previous screen, Next screen og Reset flow. Præmier og data er illustrative. Ingen GPS, login, backend, lyd eller device-overvågning er nødvendig.
+BVB-menu → intro → How it works → præmier → aktivering/lokation/swipe → aktiveringsanimation → bekræftelse → kickoff → første halvleg → halvleg → anden halvleg → fulltime → collecting entries → resultat → tak/deling → præmiebillet → menu.
 
-## Arkitektur og valg
+Kun FanModus er aktiv på menuen. De øvrige felter og bundnavigationen er deaktiveret. `See all prizes` er også deaktiveret. Der er ingen låseskærmsfunktion i det aktive flow.
 
-- `lib/fanmodus.js`: central flowmodel, ren reducer, fasegrænser, tidsstempelberegninger og valideret sessiongendannelse.
-- `context/FanModusContext.jsx`: hydration, localStorage og oprydning af interval/visibility-listener. Lodder er afledt af tiden, så dobbeltlagret state ikke divergerer.
-- `components/screens`: før, under og efter kampen. UI, animationer og overlays ligger i separate mapper.
-- `lib/assets.js`: ét sted at indsætte lokale originale assetstier. Asset-komponenten bruger Next Image, når en fil tilføjes.
-- `lib/motion.js`: fælles motion-defaults og automatisk deling (`AUTO_SHARE`); konkrete Figma-interaktioner har deres egne præcise tider.
-- `lib/share.js`: lokal Canvas-rendering til en 1080 × 1350 PNG. Eksporten har samme data og visuelle tema som previewkortet; det er ikke et pixelidentisk DOM-screenshot. Ingen eksportdependency er nødvendig.
-- Skrifttyperne Bebas Neue, Space Grotesk og Barlow Condensed er hentet fra Google Fonts med OFL-licenser og selvhostet via next/font/local. Første build med next/font/google kunne ikke hente dem i sandboxen. Lokale filer gør senere builds og demo uafhængige af fontnetværk. Regenerering: `python3 scripts/download-fonts.py`.
-- Den oprindelige Tailwind/Turbopack CSS-loader er fjernet fra next.config.mjs. Prototypen bruger almindelig CSS; den ubrugte loader krævede en portbaseret hjælpeproces, som miljøet blokerede. Øvrig Next-konfiguration og eksisterende dependencies er bevaret.
-- Halvlege varer 45 minutter, pausen 15 minutter og kickoff starter ved 34:20. Demo-spring bruger sammenhængende presets. Full-time-preset giver 86:32, præcis 86 lodder og fryser resultatet.
-- Sessioner i en afbrudt aktiveringsanimation gendannes til aktiveringsskærmen. En ny aktivering nulstiller billetafsløringen.
+## Arkitektur
 
-## Tilgængelighed og layout
+| Fil/område | Ansvar |
+| --- | --- |
+| `app/page.js` | Asynkron læsning af Supabase-kampdata, `connection()`, `Suspense` og fejl ved manglende data |
+| `app/layout.js` | Metadata, dokumentets sprog, viewport og lokale fonte |
+| `components/FanModusApp.jsx` | Providers, skærmvalg, navigation, overlays, fokus og demo-panel |
+| `lib/fanmodus.js` | Sessionmodel, reducer, tidsstempler, faseskift og sessiongendannelse |
+| `context/FanModusContext.jsx` | Hydration, localStorage, fælles ur og afledte lodder |
+| `components/animations/useSessionTimeout.js` | Ventetider, som følger demo-urets tidsforskydning |
+| `lib/swipe-sequence.js` | Swipe-sekvens og afbrydelige ventetider |
+| `lib/ticket-flip.js` | Testbar rækkefølge og timing for normal- og vinderflip |
+| `context/SoundContext.jsx`, `lib/sounds.js` | Fælles Web Audio-controller, preload, unlock og afspilning |
+| `components/ui/` | Fælles dialoger, referencecanvas, headers, kampbillet og layout |
+| `lib/share.js` | Canvas-rendering og PNG-download |
+| `lib/*-design.js` | Assetstier, Figma-nodehenvisninger og referencekoordinater |
 
-Mobile-first, 100dvh, safe areas, fleksibel bredde op til 430 px og scrollbar ved kort viewport. Synlige fokusmarkeringer, semantiske knapper, tastaturalternativ til swipe, modal focus trap/Escape/returfokus og tekstfeedback. Reduced motion understøttes i Motion og CSS. Store timere er ikke i aria-live, så skærmlæsere ikke afbrydes hvert sekund.
+Browserafhængig kode ligger i klientkomponenter og deres effects/event handlers. `DesktopViewport` kan modtage serverrenderet indhold som children. `connection()` afgrænser den request-baserede kampforespørgsel; med Cache Components kan loading-fallbacken prerenderes som shell. Hele siden beskrives derfor ikke som en statisk eksport.
 
-## Verificeret i miljøet
+Navigation foregår via `session.currentScreen` og lokal historik, ikke separate URL'er for hver skærm. Beregningsfunktioner og sekvensfunktioner testes uden browseren. Reduceren bruger et indsendt tidspunkt i tests og ellers `Date.now()`.
 
-- `npm run lint`: bestået.
-- `npm test`: 8 tests bestået. Dækker lokationskrav, timestamps, halvlegspause, fuld baggrundsindhentning, persistens, ugyldig session, 86:32/86-resultat og billet/reset.
-- `npm run build`: bestået; `/` prerenderes statisk.
-- Eksisterende Next dev-server på `http://localhost:3000/?demo=1`: HTTP 200. Den eksisterende server blev bevaret.
+## Reel datakilde og simulerede funktioner
 
-## Ikke verificeret visuelt
+`lib/supabase.js` opretter en klient ud fra `NEXT_PUBLIC_SUPABASE_URL` og `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Miljøfiler ignoreres af Git. En publishable key er ikke en hemmelig servernøgle; tabellens adgang skal styres i Supabase. Der er ingen database-migrations eller RLS-policies i repositoryet.
 
-Browserkontrollen kunne ikke initialiseres: værktøjets sandbox-metadata mangler `sandboxPolicy`. Derfor er hele klikflowet, faktisk finger-swipe, billeddownload, Web Share, skærmlæser og screenshots ved 375 × 812, 390 × 844 og 430 × 932 **ikke browser-verificeret**. Implementering og modeltests erstatter ikke denne kontrol. Der er ikke lavet screenshots eller påstået pixelmatch med Figma, da der ikke er leveret Figma-frames eller originale assets.
+`MatchData` læser én kamp fra `matches`, sorteret efter kickoff og filtreret til kickoff nu eller senere. Der hentes id, modstanderoplysninger, logo, kickoff, stadion og målscore. **Supabase og en tilgængelig kommende kamp kræves også til eksamensdemoen.** Ingen match giver en særskilt besked; konfigurations-/netværksfejl viser en generel fejl med genindlæsning som retry.
 
-## Manuel gennemgang før eksamen
+Følgende er lokale simuleringer:
 
-1. Åbn `/?demo=1`, brug Previous screen til menuen og gennemgå onboarding.
-2. Afvis lokation, prøv igen, godkend den simulerede lokation.
-3. Test både kort swipe, fuldt swipe og Enter på håndtaget.
-4. Spring til kickoff; vent lidt; genindlæs og bekræft timerens fortsættelse.
-5. Spring til halvleg; bekræft at lodderne ikke vokser; gå til anden halvleg.
-6. Brug Next screen frem til full time; preset giver 86:32 og 86 entries. Fortsæt til tak, og luk den automatiske delingsvisning.
-7. Åbn deling igen; gem PNG; prøv delingsmenu på en understøttet mobil.
-8. Åbn præmiebilletten, flip, tryk igen og genindlæs; resultatet skal forblive afsløret.
-9. Kontrollér fejl/retry separat og låseskærmen via kampens preview-link. Demo-panelet har navigation og Reset flow.
-10. Gentag ved 375 × 812, 390 × 844 og 430 × 932, tastatur og reduced motion.
-11. Skjul panelet med `demo=0`. Der er ingen valgbare animationsvarianter.
+- Lokationsgodkendelse. Dialogen kalder ikke GPS.
+- Telefonfri tid. Appen registrerer ikke faktisk telefonbrug eller låsning.
+- Kampforløb, lodder og statistik. Statistikdialogen indeholder illustrative tal.
+- Præmieafgørelse. Normalbilletten viser taberresultatet. Vinderknappen styrer en lokal demovisning, som ikke gemmes som præmieafgørelse.
 
-## Originale assets der mangler
+Der skrives ikke brugere, sessioner, lodder eller præmieresultater til Supabase. Sessionen ligger i localStorage og kan ændres af brugeren; den er ikke en autoritativ registrering til en reel lodtrækning.
 
-BVB- og modstanderlogo, stadionfoto/illustration, signeret trøje, kampbilletter og merchandise. Derudover kan penselstrøg, pile, tape, håndtegnede cirkler, krone og færdig delingsgrafik erstatte simple CSS-/Lucide-elementer efter behov. Der anvendes ingen tilfældige internetbilleder eller imitationer af officielle logoer.
+## Tid og demo
 
-## Desktop-ramme (opdatering)
+En ny kickoff-nedtælling starter på **60:00**, når kickoff-skærmen åbnes. Den følger sessionens deadline, ikke databasekampens kickoff. Første og anden halvleg varer 45 minutter; pausen varer 15 minutter. Kun aktive halvlege optjener tid. Lodder er `Math.floor(seconds / 60)`.
 
-Desktop med mus/trackpad (`hover: hover` og `pointer: fine`) bruger nu `DesktopViewport`: en 390 × 844-ramme skaleres med `min(1, availableWidth / 390, availableHeight / 844)` og centreres i 100dvh med 16 px luft. Wrapperen reserverer præcis den skalerede plads. ResizeObserver og visualViewport-resize genberegner størrelsen. Touch/mobile følger fortsat det naturlige layout uden transform.
+Tidsstempler gør det muligt at indhente forløbet efter en inaktiv fane. Et interval på 500 ms opdaterer visningen, og `visibilitychange` udløser også et tick. Interval og listener ryddes op. Ny aktivering nulstiller optjening og billetafsløring; Reset flow nulstiller også demo-tidsforskydningen. En afbrudt aktivering gendannes til aktiveringsskærmen.
 
-Den transformerede ramme indeholder fixed overlays; demo-knappen er absolut positioneret i appen. Appens højde og viewportbaserede typografi bruger referencekoordinater på desktop. `PreviewFit` tilpasser fælles skærm-/dialogindhold, hvis en eksisterende skærm er højere end pladsen, så knapper ikke klippes eller kræver scrolling. Motion-animationerne har egne, uændrede transforms. Swipe normaliserer pointerkoordinater efter den faktisk renderede skala (inklusive indholdstilpasningen).
+`?demo=1` viser kontrollerne; `?demo=0` skjuler dem. Udviklingsvisningen har som standard demo slået til. Panelet indeholder tidligere/næste skærm og reset samt direkte fejl-/loadingvisninger.
 
-Geometrien testes ved 1440 × 900, 1440 × 740, 1280 × 720, 1024 × 600, 800 × 450, 600 × 500, 360 × 640 og 1920 × 1080. Dette er beregningstests, ikke browser-rendering. Browser-skillens forbindelse fejler fortsat med manglende `sandboxPolicy`, så faktisk visuel resize, klik/swipe og overlays er ikke browser-verificeret.
+- **+1 min** findes kun på de tidsstyrede aktiverings-, kickoff-, kamp-, halvlegs-, fulltime- og collecting-skærme uden åbne dialoger. Klik akkumuleres i sessionens `demoTimeOffsetMs` og påvirker timere og animationsventetider. Kampresultatet optjener ikke ekstra tid efter fulltime.
+- **Play winning reveal** findes kun på præmiesiden. Den starter eller genafspiller vindersekvensen, også når billetten allerede er vendt.
+- Direkte tryk på kickoff-/kampskærmene udfører `ADVANCE_MATCH`. Denne genvej er bevaret og er også aktiv med `demo=0`.
+- Fulltime-preset via demo-navigation giver 86:32 og 86 lodder. Et fuldt normalt simuleret kampforløb giver 90 minutter og 90 lodder.
+- `DEMO_TIME`-preset og ignorering af ældre `variant`-data er bevaret, fordi sessionstestene bruger dem.
 
-## Referencebaseret startflow
+## Animation, lyd og deling
 
-Menu, intro, How it works, præmier, aktivering og lokationsdialog er opdateret efter den vedlagte startflow-reference. Menuen bruger mørke felter og gul bundnavigation; onboarding bruger gule penselstrøg, lyse papirstrimler, cirklede trin og en papir-CTA. Aktivering har centralt power-symbol, 1 minut = 1 lod og en afrundet swipekontrol. FanModus-navnet og de engelske UI-tekster bevares.
+Swipe har fire tilstande og tastaturalternativ. Aktivering og fulltime bruger lokale GIF'er. Collecting entries viser en GIF i 3,8 sekunder før resultatet; resultatet er allerede beregnet fra sessionen, og der køres ikke en backend-lodoptælling.
 
-`FanModusWordmark` er en enkel tekstplaceholder, ikke et officielt sponsorlogo. `stand-placeholder.svg` og `jersey-placeholder.svg` er originale, lokale vektorillustrationer, som udskiftes via `lib/assets.js` med de rigtige stadionfotos og produktassets. Lokationsdialogens systemblå farve er afgrænset til iOS-simuleringen. Dialogen siger udtrykkeligt, at den ikke anmoder om GPS; begge tillad-knapper godkender den samme lokale demosimulering, og afvisning åbner den eksisterende retry-tilstand.
+Normalflip har cirka 1,20 sekunders bevægelse. Vinderflip har cirka 1,56 sekunder samt efterfølgende lys og konfetti. Vinderbillettens mørke præmieflade, signerede trøje og `YOU WON.`-overskrift er en særskilt visning. Klik låses under flip; navigation/unmount afbryder sekvensen. Reduced motion viser direkte sideskift og skjuler de dekorative effekter.
 
-De øvrige menufelter viser tydeligt afgrænsede placeholders; FanModus er det komplette flow. Præmieskærmens See all prizes åbner en oversigt og kan lukkes med tastatur. Browser-verifikation er fortsat begrænset af den tidligere dokumenterede værktøjsfejl.
+`activated.mp3` afspilles ved gennemført swipe; et tresekunders uddrag fra sekund 2–5 af `crowd-roar.mp3` bruges ved aktiveringsbekræftelse og vinderafsløring. `ticket-flip.mp3` starter ved vendingen og afgrænses til 0,95 sekunder normalt / 1,2 sekunder ved sejr. Lyd er som standard til uden mute-knap. Browserens lydsystem åbnes ved brugerinteraktion, og fejl håndteres uden at blokere UI'et.
+
+`AUTO_SHARE` er aktuelt `true` og åbner kampbilletten 900 ms efter takkesiden; dette er ikke begrænset til demo-mode. Kampbilletten kan også åbnes via Dortmund-logoet. Deling eksporterer en **1170 × 1950 PNG** med lokale billetassets og aktuelle sessionstal. Canvas-eksporten er en særskilt rendering, ikke et DOM-screenshot. Web Share bruges ved filunderstøttelse; ellers downloades billedet. Appen poster ikke direkte til Instagram.
+
+## Design, assets og tilgængelighed
+
+BVB-logo, stadion-/publikumsfotos, signeret trøje, billetgrafik, teksturer, papir, penselstrøg og andre grafiske lag er tilføjet lokalt under `public/`. Modstanderlogoet kommer fra kampdata. Assetstier findes både i designmoduler og direkte i komponenter. Generiske fallback-definitioner i `lib/assets.js` er ikke en liste over manglende hovedassets.
+
+Fonte indlæses med `next/font/local`. `scripts/download-fonts.py` er bevaret som et manuelt hjælpeværktøj til de oprindelige globale fonte; det regenererer ikke alle de senere tilføjede fonte og køres ikke ved build.
+
+Skærmene bruger overvejende et 390 × 844 referencecanvas med absolutte koordinater. `FigmaScreen` skalerer efter bredde; intro og aktivering har tilsvarende egne wrappers. Menuen bruger fast 390 × 800 indhold under statusbaren. Desktop med mus/trackpad bruger en centreret 390 × 844-ramme, skaleret efter tilgængelig plads. `PreviewFit` tilpasser højden af indhold og dialoger; swipe normaliserer pointerkoordinater efter den renderede skala.
+
+Semantiske knapper, fokusmarkeringer, Enter/Space til swipe, dialogernes fokusfælde/Escape/returfokus, tekstfeedback og reduced motion er implementeret. Takkesidens ringe roterer med uret i et 40-sekunders loop og står stille ved reduced motion. Timere har `role="timer"` uden løbende live-oplæsning hvert sekund. Dette er ikke en erklæring om fuld tilgængelighedsgodkendelse.
+
+## Tests og verificering
+
+Se [README](../README.md#checks) for det aktuelle testsetup: **46 tests** fordelt på session, swipe, billetflip, lyd og viewportgeometri. Lyd- og animationstestene bruger simuleringer; geometritestene aflæser ikke browserens DOM. Lint og produktionsbuild er separate checks.
+
+Tidligere udviklingskontroller har omfattet isolerede Chrome-forløb for billetflip, vinder-demo, reduced motion og demo-uret. Der findes ikke en indchecket browser-testsuite. De automatiserede checks beviser ikke Safari-, skærmlæser-, Web Share-, database- eller pixelidentisk Figma-adfærd.
+
+## Bevarede begrænsninger
+
+Denne oprydning ændrer ikke appens adfærd:
+
+- Kampforespørgslen kan efter kickoff vælge en anden kamp eller ingen kamp. Sessionen er ikke bundet til et match-id.
+- Der er ingen offline-fallback for kampdata. Demo-panelet vises ikke i den indledende fejlgren uden match.
+- Skjulte faseskiftknapper er stadig aktive uden synligt demo-panel.
+- Den fælles Context opdaterer også forbrugere, som ikke viser tid.
+- Sessiongendannelsen validerer ikke alle felters typer og tilladte værdier.
+- Smalle skærme, tekstforstørrelse og klikområder kræver manuel kontrol; faste koordinater og clipping er bevaret.
+- Eksterne logoer kan kræve CORS-håndtering for at kunne eksporteres fra Canvas. Web Share skal kontrolleres på de konkrete browsere.
+- Lydpreload har ingen automatisk retry efter fejl, og en cue kan opgives efter 200 ms.
+
+## Manuel kontrol før aflevering
+
+1. Kontrollér miljøkonfiguration, læseadgang og en kommende Supabase-kamp.
+2. Gennemgå onboarding og deaktiverede menu-/præmieknapper.
+3. Afvis/godkend simuleret lokation; test kort swipe, fuldt swipe og Enter/Space.
+4. Kontrollér kickoff fra 60:00, fortsat nedtælling og genindlæsning.
+5. Klik hurtigt ti gange på +1 min; kontrollér ti minutters forskydning, faseskift og uændret optjening i pausen.
+6. Gennemgå fulltime, collecting entries og resultat/takkeside. Kontrollér ringrotation og lyde.
+7. Test PNG-download og Web Share med det faktiske modstanderlogo.
+8. Test taberflip, flip tilbage, vinder-demo, genafspilning og navigation ud af præmiesiden.
+9. Test fejl/loading/retry, keyboard og reduced motion.
+10. Kontrollér mobilbredder, kort viewport og desktop-preview. Sammenhold referenceformatet med Figma.
