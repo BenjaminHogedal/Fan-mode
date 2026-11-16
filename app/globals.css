@@ -24,6 +24,7 @@ h2 { font-size: 23px; }
 p { color: var(--muted); }
 svg { flex-shrink: 0; }
 .app-shell { width: 100%; max-width: 430px; min-height: var(--app-height, 100dvh); margin: auto; background: var(--color-black); position: relative; isolation: isolate; }
+.loading-state-host { position: absolute; z-index: 20; inset: 0; display: grid; place-items: center; overflow: clip; pointer-events: none; }
 .app-header { height: calc(78px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 23px 0; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
 .icon-button { min-width: 44px; min-height: 44px; display: inline-flex; justify-content: center; align-items: center; padding: 8px; }
 .app-header .icon-button { margin-left: -10px; }
