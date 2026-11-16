@@ -120,3 +120,52 @@ test('new activation and reset do not inherit an earlier kickoff deadline', () =
   assert.equal(nextCountdown.phaseEndsAt, start + 3600000);
   assert.equal(formatTime(Math.ceil((nextCountdown.phaseEndsAt - start) / 1000)), '60:00');
 });
+
+test('ten rapid demo clicks advance exactly ten minutes in countdowns', () => {
+  let state = reduce(initialSession, 'NAVIGATE', { screen: 'kickoff' });
+  for (let i = 0; i < 10; i++) state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(state.demoTimeOffsetMs, 600000);
+  assert.equal(state.phaseEndsAt - (start + state.demoTimeOffsetMs), 3000000);
+  assert.equal(state.currentScreen, 'kickoff');
+  assert.equal(elapsedSeconds(state, start + state.demoTimeOffsetMs), 0);
+});
+
+test('demo minute jumps increase live time and entries without being undone by a real tick', () => {
+  let state = kickoff();
+  for (let i = 0; i < 10; i++) state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(elapsedSeconds(state, start + state.demoTimeOffsetMs), 600);
+  const ticked = reduce(state, 'TICK', { now: start + 1000 });
+  assert.equal(elapsedSeconds(ticked, start + 1000 + ticked.demoTimeOffsetMs), 601);
+});
+
+test('demo minutes cross halftime, second half and fulltime while excluding break time', () => {
+  let state = kickoff();
+  for (let i = 0; i < 45; i++) state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(state.currentScreen, 'halftime');
+  assert.equal(state.phoneFreeSeconds, 2700);
+  for (let i = 0; i < 15; i++) state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(state.currentScreen, 'second');
+  assert.equal(elapsedSeconds(state, start + state.demoTimeOffsetMs), 2700);
+  for (let i = 0; i < 45; i++) state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(state.currentScreen, 'fulltime');
+  assert.equal(state.phoneFreeSeconds, 5400);
+  state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  assert.equal(state.phoneFreeSeconds, 5400);
+});
+
+test('demo clock persists on refresh and new navigation uses the advanced time', () => {
+  let state = reduce(initialSession, 'DEMO_FORWARD_MINUTE');
+  state = reduce(state, 'NAVIGATE', { screen: 'kickoff' });
+  assert.equal(state.phaseEndsAt, start + 60000 + 3600000);
+  state = reduce(state, 'DEMO_FORWARD_MINUTE');
+  const restored = restoreSession(JSON.stringify(state), {}, start + 1000);
+  assert.equal(restored.demoTimeOffsetMs, 120000);
+  assert.equal(restored.phaseEndsAt - (start + 1000 + restored.demoTimeOffsetMs), 3539000);
+  assert.equal(reduce(state, 'RESET').demoTimeOffsetMs, 0);
+});
+
+test('time travel is disabled outside demo mode and ignores invalid stored offsets', () => {
+  const state = { ...kickoff(), demoMode: false };
+  assert.equal(reduce(state, 'DEMO_FORWARD_MINUTE'), state);
+  assert.equal(restoreSession(JSON.stringify({ ...state, demoTimeOffsetMs: -1 }), {}, start).demoTimeOffsetMs, 0);
+});
