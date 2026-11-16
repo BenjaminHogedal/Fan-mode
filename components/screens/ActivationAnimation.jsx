@@ -24,14 +24,15 @@ export default function ActivationAnimation({ stage }) {
     sounded.current = true;
     sound.play('activated');
   }, [stage, sound]);
+  const { dispatch } = useFanModus();
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const animation = animations[stage];
   useEffect(() => {
     if (!loaded && !reduced) return;
-    const timer = setTimeout(() => dispatch(stage === 'progress' ? { type: 'ACTIVATED', kickoff: match.kickoff } : { type: 'NAVIGATE', screen: 'kickoff' }), reduced ? 1000 : animation.duration);
+    const timer = setTimeout(() => dispatch(stage === 'progress' ? { type: 'ACTIVATED' } : { type: 'NAVIGATE', screen: 'kickoff' }), reduced ? 1000 : animation.duration);
     return () => clearTimeout(timer);
-  }, [loaded, reduced, stage, animation.duration, dispatch, match.kickoff]);
+  }, [loaded, reduced, stage, animation.duration, dispatch]);
 
   useEffect(() => {
     if (reduced) playSuccess();
