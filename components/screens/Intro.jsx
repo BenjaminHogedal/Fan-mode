@@ -20,7 +20,7 @@ function SvgAsset({ name }) {
   return <img className={styles.svgAsset} src={introAssets[name]} alt="" aria-hidden="true" draggable="false"/>;
 }
 
-export default function Intro() {
+export default function Intro({ onContinue }) {
   const { dispatch } = useFanModus();
   const viewport = useRef(null);
   useLayoutEffect(() => {
@@ -48,7 +48,7 @@ export default function Intro() {
       <Layer name="underline"><SvgAsset name="underline"/></Layer>
       <p className={styles.description} data-node-id="64:10638">Be part of the atmosphere, stay present and win exclusive prizes.</p>
       <Layer name="arrow"><SvgAsset name="arrow"/></Layer>
-      <Layer name="cta"><motion.button className={styles.cta} whileTap={{ scale: 0.98 }} onClick={() => dispatch({ type: 'NAVIGATE', screen: 'how' })}><Image src={introAssets.paper} alt="" fill sizes="294px" priority draggable={false}/><span>Get started</span></motion.button></Layer>
+      <Layer name="cta"><motion.button className={styles.cta} whileTap={{ scale: 0.98 }} onClick={onContinue}><Image src={introAssets.paper} alt="" fill sizes="294px" priority draggable={false}/><span>Get started</span></motion.button></Layer>
     </section>
   </div>;
 }

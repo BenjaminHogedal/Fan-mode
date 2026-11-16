@@ -558,7 +558,7 @@ svg { flex-shrink: 0; }
 .app-shell[data-screen='menu'] .matchday-menu {
   position: relative;
   display: block;
-  flex: 0 0 800px;
+  flex: 0 0 390px;
   width: 390px;
   height: 800px;
   min-height: 800px;
@@ -580,6 +580,12 @@ svg { flex-shrink: 0; }
   height: 17px;
 }
 .matchday-menu > .slot { position: absolute; top: 0; left: 0; height: 43px; }
+.study-project-badge { position: absolute; bottom: 118px; left: 0; right: auto; width: 100%; max-width: 100%; margin: 0; padding: 0 17px; transform: none; color: #929292; font: 400 10px/1.6 Arial, Helvetica, sans-serif; text-align: center; }
+.study-project-badge::before { content: ''; display: block; width: 40px; height: 1px; margin: 0 auto 13px; background: #464646; }
+.study-project-badge p { margin: 0; }
+.study-project-badge p + p { margin-top: 3px; color: #707070; }
+.matchday-menu button:disabled { cursor: default; opacity: 1; }
+
 .matchday-menu h1 {
   position: absolute;
   top: 62px;
@@ -772,3 +778,5 @@ svg { flex-shrink: 0; }
 .app-shell[data-screen='prize'] > main { padding-top: 0; }
 .app-shell[data-screen='prize'] .screen-container { min-height: var(--app-height, 100dvh); }
 .app-shell[data-screen='prize'] > .screen-back { display: none; }
+
+.screen-transition-viewport { overflow-x: clip; }
