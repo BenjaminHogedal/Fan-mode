@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import localFont from 'next/font/local';
 import { useReducedMotion } from 'motion/react';
 import FigmaScreen from '@/components/ui/FigmaScreen';
 import { useFanModus } from '@/context/FanModusContext';
+import { useSound } from '@/context/SoundContext';
 import styles from './ActivationAnimation.module.css';
 
 const captionFont = localFont({ src: '../../public/fonts/barlow-semi-condensed-600.ttf', weight: '600', display: 'swap' });
@@ -15,6 +16,14 @@ const animations = {
 };
 
 export default function ActivationAnimation({ stage }) {
+  const { dispatch, match } = useFanModus();
+  const sound = useSound();
+  const sounded = useRef(false);
+  const playSuccess = useCallback(() => {
+    if (stage !== 'success' || sounded.current) return;
+    sounded.current = true;
+    sound.play('activated');
+  }, [stage, sound]);
   const { dispatch } = useFanModus();
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
@@ -25,11 +34,15 @@ export default function ActivationAnimation({ stage }) {
     return () => clearTimeout(timer);
   }, [loaded, reduced, stage, animation.duration, dispatch]);
 
+  useEffect(() => {
+    if (reduced) playSuccess();
+  }, [reduced, playSuccess]);
+
   return <FigmaScreen nodeId={animation.nodeId} label={animation.label}>
     {!reduced && <div className={styles[stage]} data-node-id={animation.imageNodeId}>
       {/* Preserve the original animated image and Figma's crop. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={animation.src} alt="" onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} draggable={false}/>
+      <img src={animation.src} alt="" onLoad={() => { setLoaded(true); playSuccess(); }} onError={() => setLoaded(true)} draggable={false}/>
     </div>}
     {stage === 'progress' && <p className={`${styles.caption} ${captionFont.className}`} data-node-id="118:108">Activating FanMode<span>...</span></p>}
     <p className={reduced ? styles.reduced : styles.srOnly} role="status">{reduced && stage === 'progress' ? 'Getting match ready' : animation.label}</p>

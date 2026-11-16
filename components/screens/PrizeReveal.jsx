@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import localFont from 'next/font/local';
 import { motion, useReducedMotion } from 'motion/react';
 import { useFanModus } from '@/context/FanModusContext';
 import FigmaScreen, { FigmaSvg } from '@/components/ui/FigmaScreen';
+import { useSound } from '@/context/SoundContext';
 import styles from './PrizeReveal.module.css';
 
 const anton = localFont({ src: '../../public/fonts/anton.ttf', weight: '400', display: 'swap' });
@@ -24,9 +25,15 @@ function TicketSurface({ back }) {
 export default function PrizeReveal() {
   const { session, dispatch } = useFanModus();
   const [back, setBack] = useState(session.ticketRevealed);
+  const sound = useSound();
+  const flipping = useRef(false);
   const reduced = useReducedMotion();
   const revealed = session.ticketRevealed;
   function flip() {
+    if (flipping.current) return;
+    flipping.current = !reduced;
+    sound.unlock();
+    sound.play('ticket', { restart: true });
     setBack(value => !value);
     if (!revealed) dispatch({ type: 'REVEAL' });
   }
@@ -36,6 +43,7 @@ export default function PrizeReveal() {
     {!revealed && <p className={`${styles.instructions} ${inter.className}`}>Tap the ticket to reveal<br/>if you’ve won.</p>}
     <div className={styles.scene}>
       <motion.button type="button" className={styles.rotator} onClick={flip} aria-pressed={back} aria-label={back ? 'Turn ticket back to the front' : 'Turn ticket over to reveal your match prize'}
+        onAnimationComplete={() => { flipping.current = false; }}
         initial={false} animate={{ rotateY: reduced ? 0 : back ? 180 : 0, y: reduced ? 0 : [0, -12, 0], scale: reduced ? 1 : [1, 1.025, 1] }}
         transition={{ duration: reduced ? 0 : 0.5, ease: 'easeInOut' }}>
         <div className={`${styles.face} ${styles.front}`} aria-hidden={back} style={reduced && back ? { visibility: 'hidden' } : undefined}>
