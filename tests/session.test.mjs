@@ -99,6 +99,18 @@ test('screen taps advance match phases and restart the next phase clock at the c
   assert.equal(reduce(finished, 'ADVANCE_MATCH'), finished);
 });
 
+test('advancing from the half-time countdown opens the second half immediately', () => {
+  const halftime = settle(kickoff(), start + 2700000);
+  assert.equal(halftime.currentScreen, 'halftime');
+
+  const second = reduce(halftime, 'ADVANCE_MATCH', { now: start + 2700123 });
+  assert.equal(second.currentScreen, 'second');
+  assert.equal(second.matchPhase, 'second');
+  assert.equal(second.phaseStartedAt, start + 2700123);
+  assert.equal(second.phaseEndsAt, start + 2700123 + 2700000);
+  assert.equal(elapsedSeconds(second, start + 2701123), 2701);
+});
+
 test('new activation and reset do not inherit an earlier kickoff deadline', () => {
   const running = reduce({ ...initialSession, locationPermission: 'granted' }, 'ACTIVATED');
   const oldCountdown = reduce(running, 'NAVIGATE', { screen: 'kickoff' });

@@ -22,7 +22,7 @@ export function ActiveHalf({ onNext }) {
 }
 
 export function HalfTime() {
-  const { session, now } = useFanModus();
+  const { session, now, dispatch } = useFanModus();
   const remaining = Math.max(0, Math.ceil((session.phaseEndsAt - now) / 1000));
   // Figma's compact halftime display uses an unpadded minute, e.g. 9:48.
   const time = formatTime(remaining).replace(/^0(?=\d:)/, '');
@@ -34,5 +34,6 @@ export function HalfTime() {
     <p className={styles.safe}>Your entries are safe.<br/>Earning resumes in the second half.</p>
     <p className={styles.next}>The second half starts in</p>
     <div className={styles.countdown} role="timer" aria-label={`${time} until the second half`}>{time}</div>
+    <button type="button" className={styles.advance} onClick={() => dispatch({ type: 'ADVANCE_MATCH' })} aria-label="Continue to second half"/>
   </div></FigmaScreen>;
 }
