@@ -13,6 +13,29 @@ test('timer derives elapsed time from timestamps, including a sleeping tab', () 
   assert.equal(elapsedSeconds(kickoff(), start + 1375000), 1375);
   assert.equal(Math.floor(elapsedSeconds(kickoff(), start + 1375000) / 60), 22);
 });
+test('a new activation starts an exact one-hour kickoff timer that survives refresh', () => {
+  const activated = reduce({ ...initialSession, locationPermission: 'granted' }, 'ACTIVATED');
+  assert.equal(activated.currentScreen, 'activated');
+  assert.equal(activated.phaseEndsAt, null);
+
+  const countdown = reduce(activated, 'NAVIGATE', { screen: 'kickoff' });
+  assert.equal(countdown.phaseStartedAt, start);
+  assert.equal(countdown.phaseEndsAt, start + 3600000);
+  assert.equal(formatTime(Math.ceil((countdown.phaseEndsAt - start) / 1000)), '60:00');
+  assert.equal(formatTime(Math.ceil((countdown.phaseEndsAt - (start + 1000)) / 1000)), '59:59');
+  assert.equal(formatTime(Math.ceil((countdown.phaseEndsAt - (start + 2000)) / 1000)), '59:58');
+  assert.equal(formatTime(Math.ceil((countdown.phaseEndsAt - (start + 3601000)) / 1000)), '00:00');
+
+  const restored = restoreSession(JSON.stringify(countdown), {}, start + 2000);
+  assert.equal(restored.currentScreen, 'kickoff');
+  assert.equal(restored.phaseEndsAt, countdown.phaseEndsAt);
+  assert.equal(formatTime(Math.ceil((restored.phaseEndsAt - (start + 2000)) / 1000)), '59:58');
+
+  const first = settle(countdown, countdown.phaseEndsAt);
+  assert.equal(first.currentScreen, 'first');
+  assert.equal(first.matchPhase, 'first');
+  assert.equal(formatTime(Math.ceil((first.phaseEndsAt - countdown.phaseEndsAt) / 1000)), '45:00');
+});
 test('half-time preserves entries and excludes all break time', () => {
   const half = settle(kickoff(), start + 2700000);
   assert.equal(half.matchPhase, 'halftime');
@@ -74,4 +97,14 @@ test('screen taps advance match phases and restart the next phase clock at the c
   assert.equal(finished.phoneFreeSeconds, 5400);
   assert.equal(finished.phaseEndsAt, null);
   assert.equal(reduce(finished, 'ADVANCE_MATCH'), finished);
+});
+
+test('new activation and reset do not inherit an earlier kickoff deadline', () => {
+  const running = reduce({ ...initialSession, locationPermission: 'granted' }, 'ACTIVATED');
+  const oldCountdown = reduce(running, 'NAVIGATE', { screen: 'kickoff' });
+  const reset = reduce(oldCountdown, 'RESET');
+  const nextActivation = reduce({ ...reset, locationPermission: 'granted' }, 'ACTIVATED');
+  const nextCountdown = reduce(nextActivation, 'NAVIGATE', { screen: 'kickoff' });
+  assert.equal(nextCountdown.phaseEndsAt, start + 3600000);
+  assert.equal(formatTime(Math.ceil((nextCountdown.phaseEndsAt - start) / 1000)), '60:00');
 });
