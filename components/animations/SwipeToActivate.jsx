@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { playSwipeSequence } from '@/lib/swipe-sequence';
+import { useSound } from '@/context/SoundContext';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue, animate, useTransform, MotionConfig, useReducedMotion } from 'motion/react';
 import { activationAssets, swipeLayout, swipeTiming } from '@/lib/activation-design';
@@ -12,6 +13,7 @@ function OriginalSvg({ name }) {
 }
 
 export default function SwipeToActivate({ onActivate, onValidate, disabled = false, active = true }) {
+  const sound = useSound();
   const track = useRef(null);
   const lifetime = useRef(null);
   const animation = useRef(null);
@@ -49,6 +51,7 @@ export default function SwipeToActivate({ onActivate, onValidate, disabled = fal
     if (busy.current || disabled || !active) return;
     if (callbacks.current.onValidate?.() === false) { reset(); return; }
     busy.current = true;
+    void sound.play('activated', { restart: true });
     setError(''); setMode('trigger');
     const controller = new AbortController();
     lifetime.current = controller;
