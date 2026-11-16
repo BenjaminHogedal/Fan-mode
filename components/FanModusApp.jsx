@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, SlidersHorizontal, Menu, BarChart3 } from 'lucide-react';
 import { FanModusProvider, useFanModus } from '@/context/FanModusContext';
+import { SoundProvider } from '@/context/SoundContext';
 import { motionSettings, AUTO_SHARE } from '@/lib/motion';
 import { BvbMenu } from './screens/BeforeMatch';
 import HowItWorks from './screens/HowItWorks';
@@ -26,7 +27,7 @@ import ShareSheet from './overlays/ShareSheet';
 import DemoControls from './overlays/DemoControls';
 import LocationDialog from './overlays/LocationDialog';
 
-export default function FanModusApp({ match, matchError }) { return <FanModusProvider match={match}><MotionConfig reducedMotion="user"><DesktopViewport><AppContent matchError={matchError}/></DesktopViewport></MotionConfig></FanModusProvider>; }
+export default function FanModusApp({ match, matchError }) { return <FanModusProvider match={match}><SoundProvider><MotionConfig reducedMotion="user"><DesktopViewport><AppContent matchError={matchError}/></DesktopViewport></MotionConfig></SoundProvider></FanModusProvider>; }
 function AppContent({ matchError }) {
   const { session, dispatch, ready, storageWarning, match } = useFanModus();
   const [overlay, setOverlay] = useState(null);
