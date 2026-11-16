@@ -16,7 +16,7 @@ const animations = {
 };
 
 export default function ActivationAnimation({ stage }) {
-  const { dispatch, match } = useFanModus();
+  const { dispatch } = useFanModus();
   const sound = useSound();
   const sounded = useRef(false);
   const playSuccess = useCallback(() => {
@@ -24,7 +24,6 @@ export default function ActivationAnimation({ stage }) {
     sounded.current = true;
     sound.play('activated');
   }, [stage, sound]);
-  const { dispatch } = useFanModus();
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const animation = animations[stage];
