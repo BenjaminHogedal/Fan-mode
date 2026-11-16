@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { motion } from 'motion/react';
-import { ArrowRight, ArrowUpRight, Ticket, Shirt, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Ticket, Shirt, ShoppingBag } from 'lucide-react';
 import { assets, getOpponentAsset } from '@/lib/assets';
 import { useFanModus } from '@/context/FanModusContext';
 
@@ -26,6 +26,3 @@ export function MatchHeader({ phase = 'MATCHDAY', score = false }) {
   const hasScore = match.home_score != null && match.away_score != null;
   return <div className="match-header"><p className="eyebrow">{phase}</p><div className="match-clubs"><Asset name="bvb" /><strong>{score && hasScore ? `${match.home_score} : ${match.away_score}` : 'VS'}</strong><Asset name="opponent" /></div><p className="match-names">BORUSSIA DORTMUND <span>{match.opponent_name.toUpperCase()}</span></p></div>;
 }
-export function Eyebrow({ children }) { return <p className="eyebrow">{children}</p>; }
-export function StepDots({ step }) { return <div className="step-dots" aria-label={`Introduction step ${step} of 4`}>{[1, 2, 3, 4].map(n => <span className={n === step ? 'selected' : ''} key={n} />)}</div>; }
-export function SectionTop({ number, children }) { return <div className="section-top"><span>{number}</span><span>{children}</span><ArrowUpRight size={18} /></div>; }
