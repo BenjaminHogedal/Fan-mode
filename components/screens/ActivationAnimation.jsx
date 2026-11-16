@@ -22,7 +22,7 @@ export default function ActivationAnimation({ stage }) {
   const playSuccess = useCallback(() => {
     if (stage !== 'success' || sounded.current) return;
     sounded.current = true;
-    sound.play('activated');
+    sound.play('crowd');
   }, [stage, sound]);
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);

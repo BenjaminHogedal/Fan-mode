@@ -3,11 +3,18 @@ import assert from 'node:assert/strict';
 import { createSoundController, SOUND_FILES } from '../lib/sounds.js';
 
 function fixture({ blocked = false, resumeDelay = 0, loadDelay = 0 } = {}) {
-  const started = [], stopped = [], fetched = [], sources = [];
+  const started = [], stopped = [], fetched = [], sources = [], fades = [];
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   class AudioContext {
     state = 'suspended';
+    currentTime = 10;
     destination = {};
+    createGain() {
+      return { connect() {}, disconnect() {}, gain: {
+        setValueAtTime(value, time) { fades.push(['set', value, time]); },
+        linearRampToValueAtTime(value, time) { fades.push(['ramp', value, time]); },
+      } };
+    }
     async resume() {
       if (blocked) throw new Error('NotAllowedError');
       if (resumeDelay) await delay(resumeDelay);
@@ -15,7 +22,7 @@ function fixture({ blocked = false, resumeDelay = 0, loadDelay = 0 } = {}) {
     }
     async decodeAudioData(data) { return data; }
     createBufferSource() {
-      const source = { connect() {}, disconnect() {}, start() { started.push(this.buffer); }, stop() { stopped.push(this.buffer); } };
+      const source = { connect() {}, disconnect() {}, start(...args) { this.startArguments = args; started.push(this.buffer); }, stop() { stopped.push(this.buffer); } };
       sources.push(source);
       return source;
     }
@@ -27,7 +34,7 @@ function fixture({ blocked = false, resumeDelay = 0, loadDelay = 0 } = {}) {
       return { ok: true, arrayBuffer: async () => url };
     },
   });
-  return { sound, started, stopped, fetched, sources };
+  return { sound, started, stopped, fetched, sources, fades };
 }
 
 test('both MP3 cues are enabled by default and play once without overlap', async () => {
@@ -84,4 +91,13 @@ test('every ticket flip in either direction restarts the cue without overlap', a
   assert.equal(f.started.length, 4); assert.equal(f.stopped.length, 3);
   f.sources[0].onended();
   assert.equal(await f.sound.play('ticket'), false);
+});
+
+test('the crowd cue plays seconds two through five with a smooth entrance and exit', async () => {
+  const f = fixture();
+  assert.equal(await f.sound.play('crowd'), true);
+  assert.deepEqual(f.started, [SOUND_FILES.crowd]);
+  assert.deepEqual(f.sources[0].startArguments, [0, 2, 3]);
+  assert.deepEqual(f.fades, [['set', 0, 10], ['ramp', 1, 10.12], ['set', 1, 12.75], ['ramp', 0, 13]]);
+  assert.equal(await f.sound.play('crowd'), false);
 });
