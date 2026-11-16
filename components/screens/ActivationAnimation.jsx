@@ -5,6 +5,7 @@ import { useReducedMotion } from 'motion/react';
 import FigmaScreen from '@/components/ui/FigmaScreen';
 import { useFanModus } from '@/context/FanModusContext';
 import { useSound } from '@/context/SoundContext';
+import useSessionTimeout from '@/components/animations/useSessionTimeout';
 import styles from './ActivationAnimation.module.css';
 
 const captionFont = localFont({ src: '../../public/fonts/barlow-semi-condensed-600.ttf', weight: '600', display: 'swap' });
@@ -27,11 +28,11 @@ export default function ActivationAnimation({ stage }) {
   const reduced = useReducedMotion();
   const [loaded, setLoaded] = useState(false);
   const animation = animations[stage];
-  useEffect(() => {
-    if (!loaded && !reduced) return;
-    const timer = setTimeout(() => dispatch(stage === 'progress' ? { type: 'ACTIVATED' } : { type: 'NAVIGATE', screen: 'kickoff' }), reduced ? 1000 : animation.duration);
-    return () => clearTimeout(timer);
-  }, [loaded, reduced, stage, animation.duration, dispatch]);
+  useSessionTimeout(
+    () => dispatch(stage === 'progress' ? { type: 'ACTIVATED' } : { type: 'NAVIGATE', screen: 'kickoff' }),
+    reduced ? 1000 : animation.duration,
+    loaded || reduced,
+  );
 
   useEffect(() => {
     if (reduced) playSuccess();

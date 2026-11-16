@@ -1,9 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useReducedMotion } from 'motion/react';
 import FigmaScreen from '@/components/ui/FigmaScreen';
 import MatchChrome from '@/components/ui/MatchChrome';
 import { useFanModus } from '@/context/FanModusContext';
+import useSessionTimeout from '@/components/animations/useSessionTimeout';
 import styles from './PostMatchAnimation.module.css';
 
 // Original Figma GIFs; the collecting screen advances early to keep the flow brisk.
@@ -19,11 +20,11 @@ export default function PostMatchAnimation({ stage }) {
   const [failed, setFailed] = useState(false);
   const animation = stages[stage];
   const fulltime = stage === 'fulltime';
-  useEffect(() => {
-    if (!loaded && !reduced && !failed) return;
-    const timer = setTimeout(() => dispatch({ type: 'NAVIGATE', screen: animation.next }), reduced || failed ? 1000 : animation.duration);
-    return () => clearTimeout(timer);
-  }, [loaded, reduced, failed, animation, dispatch]);
+  useSessionTimeout(
+    () => dispatch({ type: 'NAVIGATE', screen: animation.next }),
+    reduced || failed ? 1000 : animation.duration,
+    loaded || reduced || failed,
+  );
 
   return <FigmaScreen nodeId={animation.nodeId} label={animation.label}>
     {fulltime && <MatchChrome/>}

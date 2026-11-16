@@ -6,7 +6,8 @@ const FanModusContext = createContext(null);
 export function FanModusProvider({ children, match }) {
   const [session, dispatch] = useReducer(sessionReducer, initialSession);
   const [ready, setReady] = useState(false);
-  const [now, setNow] = useState(0);
+  const [wallNow, setNow] = useState(0);
+  const now = wallNow + (session.demoTimeOffsetMs ?? 0);
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {
     const restore = setTimeout(() => {
