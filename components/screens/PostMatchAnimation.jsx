@@ -6,10 +6,10 @@ import MatchChrome from '@/components/ui/MatchChrome';
 import { useFanModus } from '@/context/FanModusContext';
 import styles from './PostMatchAnimation.module.css';
 
-// Original Figma GIFs: play one complete sequence before advancing.
+// Original Figma GIFs; the collecting screen advances early to keep the flow brisk.
 const stages = {
   fulltime: { nodeId: '44:10138', imageNodeId: '170:167', src: '/images/post-match/fulltime.gif', duration: 4040, next: 'collecting', label: 'Full time' },
-  collecting: { nodeId: '44:10139', imageNodeId: '168:163', src: '/images/post-match/entries.gif', duration: 5040, next: 'summary', label: 'Collecting entries...' },
+  collecting: { nodeId: '44:10139', imageNodeId: '168:163', src: '/images/post-match/entries.gif', duration: 3800, next: 'summary', label: 'Collecting entries...' },
 };
 
 export default function PostMatchAnimation({ stage }) {

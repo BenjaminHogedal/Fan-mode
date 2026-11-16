@@ -101,3 +101,10 @@ test('the crowd cue plays seconds two through five with a smooth entrance and ex
   assert.deepEqual(f.fades, [['set', 0, 10], ['ramp', 1, 10.12], ['set', 1, 12.75], ['ramp', 0, 13]]);
   assert.equal(await f.sound.play('crowd'), false);
 });
+
+test('ticket reveal audio is limited to the flip sequence with a soft ending', async () => {
+  const f = fixture();
+  assert.equal(await f.sound.play('ticket', { restart: true, duration: 0.95 }), true);
+  assert.deepEqual(f.sources[0].startArguments, [0, 0, 0.95]);
+  assert.deepEqual(f.fades.map(([kind, value, time]) => [kind, value, Number(time.toFixed(3))]), [['set', 0, 10], ['ramp', 1, 10.015], ['set', 1, 10.8], ['ramp', 0, 10.95]]);
+});
