@@ -22,6 +22,7 @@ import ErrorState from './ui/ErrorState';
 import Modal from './ui/Modal';
 import { usePreviewTools } from './ui/DesktopViewport';
 import StatusBar from './ui/StatusBar';
+import SoundToggle from './ui/SoundToggle';
 import PreviewFit from './ui/PreviewFit';
 import ShareSheet from './overlays/ShareSheet';
 import DemoControls from './overlays/DemoControls';
@@ -196,6 +197,7 @@ function AppContent({
   };
   const canBack = ['intro', 'how', 'prizes', 'activation', 'thanks', 'prize'].includes(screen);
   if (!match) return <div className="app-shell" data-screen="connection">
+    <SoundToggle/>
     <header className="app-header">
       <StatusBar />
     </header>
@@ -205,6 +207,7 @@ function AppContent({
   </div>;
   return <>
     <div className="app-shell" data-screen={screen} data-overlay={Boolean(overlay)} data-overlay-kind={overlay || undefined} data-state-preview={['loading', 'connection', 'connection-alt', 'activation-error', 'location-error'].includes(overlay)}>
+      <SoundToggle screen={screen} hidden={!ready || screen === 'menu' || Boolean(overlay)}/>
       <header className="app-header">
         <StatusBar tone={['kickoff', 'first', 'halftime', 'second', 'fulltime'].includes(screen) && !overlay ? 'dark' : 'light'} />
       </header>

@@ -51,7 +51,7 @@ Flowet går fra BVB-menu gennem intro, instruktion, præmier og aktivering til k
 - **★ Play winning reveal** vises kun på præmiebillettens side. Den kan genafspille en lokal vinderudgave med signeret trøje, lys, konfetti og lyd. Vinderudgaven gemmes ikke som et reelt præmieresultat.
 - Automatisk åbning af delingsvisningen på takkesiden styres af `AUTO_SHARE` i `lib/motion.js`. Den er aktuelt slået til, også når demo-panelet er skjult.
 
-Lyd er slået til uden mute-knap. Browserens lydsystem åbnes ved brugerinteraktion; mislykket afspilning må ikke blokere flowet. Systemets reduced-motion-præference understøttes.
+Lyd er som udgangspunkt slået til. Et diskret højttalerikon øverst til højre på FanModus-skærmene skifter mute/unmute; valget gemmes i localStorage. Mute stopper igangværende og ventende lyd, og unmute genafspiller ikke tidligere cues. Knappen skjules på BVB-menuen og under åbne dialoger. Browserens lydsystem åbnes ved brugerinteraktion; mislykket afspilning må ikke blokere flowet. Systemets reduced-motion-præference understøttes.
 
 ## Checks
 
@@ -62,14 +62,14 @@ npm run build
 npm start
 ```
 
-Det aktuelle testsetup bruger Node.js' indbyggede test runner og **46 tests**:
+Det aktuelle testsetup bruger Node.js' indbyggede test runner og **53 tests**:
 
 | Fil | Antal | Omfang |
 | --- | ---: | --- |
 | `tests/session.test.mjs` | 17 | Faser, timers, lokation, persistens og demo-tid |
 | `tests/swipe-sequence.test.mjs` | 5 | Swipe-rækkefølge, timing, afbrydelse og reduced motion |
 | `tests/ticket-flip.test.mjs` | 5 | Normal-/vindersekvens, lydtidspunkt og afbrydelse |
-| `tests/sounds.test.mjs` | 10 | Preload, asynkront unlock, overlap, klipning og fade |
+| `tests/sounds.test.mjs` | 17 | Preload, unlock, overlap, klipning/fade, mute og gemt lydvalg |
 | `tests/viewport.test.mjs` | 9 | Referencegeometri ved forskellige desktopstørrelser |
 
 Tests bruger rene modeller og simuleret lyd-/animationsadfærd. De erstatter ikke browser-, touch-, skærmlæser-, Supabase- eller Web Share-tests. Node kan vise en `MODULE_TYPELESS_PACKAGE_JSON`-advarsel; den stopper ikke de eksisterende tests.

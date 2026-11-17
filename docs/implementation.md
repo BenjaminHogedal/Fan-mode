@@ -64,7 +64,7 @@ Swipe har fire tilstande og tastaturalternativ. Aktivering og fulltime bruger lo
 
 Normalflip har cirka 1,20 sekunders bevægelse. Vinderflip har cirka 1,56 sekunder samt efterfølgende lys og konfetti. Vinderbillettens mørke præmieflade, signerede trøje og `YOU WON.`-overskrift er en særskilt visning. Klik låses under flip; navigation/unmount afbryder sekvensen. Reduced motion viser direkte sideskift og skjuler de dekorative effekter.
 
-`activated.mp3` afspilles ved gennemført swipe; et tresekunders uddrag fra sekund 2–5 af `crowd-roar.mp3` bruges ved aktiveringsbekræftelse og vinderafsløring. `ticket-flip.mp3` starter ved vendingen og afgrænses til 0,95 sekunder normalt / 1,2 sekunder ved sejr. Lyd er som standard til uden mute-knap. Browserens lydsystem åbnes ved brugerinteraktion, og fejl håndteres uden at blokere UI'et.
+`activated.mp3` afspilles ved gennemført swipe; et tresekunders uddrag fra sekund 2–5 af `crowd-roar.mp3` bruges ved aktiveringsbekræftelse og vinderafsløring. `ticket-flip.mp3` starter ved vendingen og afgrænses til 0,95 sekunder normalt / 1,2 sekunder ved sejr. Lyd er som standard til. En diskret mute/unmute-knap på FanModus-skærmene gemmer valget i localStorage. Mute stopper både igangværende og ventende cues; unmute genafspiller ikke tidligere lyd. Knappen er skjult på BVB-menuen og ved åbne dialoger. Browserens lydsystem åbnes ved brugerinteraktion, og fejl håndteres uden at blokere UI'et.
 
 `AUTO_SHARE` er aktuelt `true` og åbner kampbilletten 900 ms efter takkesiden; dette er ikke begrænset til demo-mode. Kampbilletten kan også åbnes via Dortmund-logoet. Deling eksporterer en **1170 × 1950 PNG** med lokale billetassets og aktuelle sessionstal. Canvas-eksporten er en særskilt rendering, ikke et DOM-screenshot. Web Share bruges ved filunderstøttelse; ellers downloades billedet. Appen poster ikke direkte til Instagram.
 
@@ -80,7 +80,7 @@ Semantiske knapper, fokusmarkeringer, Enter/Space til swipe, dialogernes fokusf�
 
 ## Tests og verificering
 
-Se [README](../README.md#checks) for det aktuelle testsetup: **46 tests** fordelt på session, swipe, billetflip, lyd og viewportgeometri. Lyd- og animationstestene bruger simuleringer; geometritestene aflæser ikke browserens DOM. Lint og produktionsbuild er separate checks.
+Se [README](../README.md#checks) for det aktuelle testsetup: **53 tests** fordelt på session, swipe, billetflip, lyd og viewportgeometri. Lyd- og animationstestene bruger simuleringer; geometritestene aflæser ikke browserens DOM. Lint og produktionsbuild er separate checks.
 
 Tidligere udviklingskontroller har omfattet isolerede Chrome-forløb for billetflip, vinder-demo, reduced motion og demo-uret. Der findes ikke en indchecket browser-testsuite. De automatiserede checks beviser ikke Safari-, skærmlæser-, Web Share-, database- eller pixelidentisk Figma-adfærd.
 

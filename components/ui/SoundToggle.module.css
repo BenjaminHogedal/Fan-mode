@@ -1,0 +1,25 @@
+.toggle {
+  position: absolute;
+  z-index: 6;
+  top: calc(54px + env(safe-area-inset-top));
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #b8b8b8;
+  box-shadow: none;
+  transform: scale(var(--sound-control-scale, 1));
+  transform-origin: top right;
+  touch-action: manipulation;
+}
+.toggle[hidden] { display: none; }
+.toggle:is([data-screen='kickoff'], [data-screen='first'], [data-screen='halftime'], [data-screen='second'], [data-screen='fulltime']) { color: #242424; }
+.toggle[data-screen='summary'] { top: calc(88px + env(safe-area-inset-top)); }
+.toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
