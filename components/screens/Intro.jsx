@@ -7,7 +7,7 @@ import { useFanModus } from '@/context/FanModusContext';
 import { introAssets, introLayers } from '@/lib/intro-design';
 import styles from './Intro.module.css';
 
-const introBody = localFont({ src: '../../public/fonts/intro-space-grotesk-variable.ttf', weight: '300 700', variable: '--font-intro-body', display: 'swap' });
+const introBody = localFont({ src: '../../public/fonts/intro-space-grotesk-variable.woff2', weight: '300 700', variable: '--font-intro-body', display: 'swap' });
 
 function Layer({ name, children, className = '', as: Tag = 'div' }) {
   const { nodeId, width, height, matrix } = introLayers[name];

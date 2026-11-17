@@ -6,13 +6,13 @@ import { formatTime } from '@/lib/fanmodus';
 import { useFanModus } from '@/context/FanModusContext';
 import styles from './MatchTicket.module.css';
 
-const digital = localFont({ src: '../../public/fonts/kickoff-digital-numbers.ttf', weight: '400', display: 'swap' });
+const digital = localFont({ src: '../../public/fonts/kickoff-digital-numbers.woff2', weight: '400', display: 'swap' });
 export default function MatchTicket({ seconds, entries }) {
   const { match } = useFanModus();
   return <div className={styles.ticket} data-node-id="180:215" aria-label={`${formatTime(seconds)} phone-free time, ${entries} entries earned`}>
     <div className={styles.body}><FigmaSvg src="/images/share/ticket.svg"/></div>
     <div className={styles.underline}><FigmaSvg src="/images/share/underline.svg"/></div>
-    <div className={styles.score}><Image src="/images/post-match/bvb.png" alt="Borussia Dortmund" width={64.417} height={64.433}/><strong>{match.home_score ?? '–'} - {match.away_score ?? '–'}</strong><Image src={match.opponent_logo} alt={match.opponent_name} width={64.425} height={64.425} unoptimized/></div>
+    <div className={styles.score}><Image src="/images/post-match/bvb.webp" alt="Borussia Dortmund" width={64.417} height={64.433}/><strong>{match.home_score ?? '–'} - {match.away_score ?? '–'}</strong><Image src={match.opponent_logo} alt={match.opponent_name} width={64.425} height={64.425} unoptimized/></div>
     <div className={styles.leftNotch}><FigmaSvg src="/images/share/side-notch.svg"/></div>
     <div className={styles.rightNotch}><FigmaSvg src="/images/share/side-notch.svg"/></div>
     <div className={styles.band}/>

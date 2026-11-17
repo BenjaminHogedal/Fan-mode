@@ -6,7 +6,7 @@ import { activationAssets } from '@/lib/activation-design';
 import SwipeToActivate from '@/components/animations/SwipeToActivate';
 import styles from './Activation.module.css';
 
-const archivo = localFont({ src: '../../public/fonts/activation-archivo-black.ttf', weight: '400', variable: '--font-activation-heading', display: 'swap' });
+const archivo = localFont({ src: '../../public/fonts/activation-archivo-black.woff2', weight: '400', variable: '--font-activation-heading', display: 'swap' });
 
 function OriginalSvg({ name }) {
   // Keep the unmodified Figma SVG's intrinsic root dimensions.

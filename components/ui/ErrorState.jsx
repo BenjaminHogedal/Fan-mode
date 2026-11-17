@@ -4,10 +4,10 @@ import styles from './States.module.css';
 import { useFanModus } from '@/context/FanModusContext';
 
 const errors = {
-  connection: { nodeId: '44:10145', image: 'seated-fan.png', imageNodeId: '161:82', title: 'No connection', copy: 'please check your internet connection and\ntry again', illustration: 'seated' },
-  'connection-alt': { nodeId: '44:10146', image: 'standing-fan.png', imageNodeId: '161:79', title: 'No connection', copy: 'please check your internet connection and\ntry again', illustration: 'standing' },
-  activation: { nodeId: '44:10147', image: 'ticket.png', imageNodeId: '161:133', title: 'Activation failed', copy: 'we couldn’t activate fan mode.\nplease try again', illustration: 'ticket' },
-  location: { nodeId: '44:10147', image: 'ticket.png', imageNodeId: '161:133', title: 'Location required', copy: 'Enable location access to activate\nFanModus at the stadium.', illustration: 'ticket' },
+  connection: { nodeId: '44:10145', image: 'seated-fan.webp', imageNodeId: '161:82', title: 'No connection', copy: 'please check your internet connection and\ntry again', illustration: 'seated' },
+  'connection-alt': { nodeId: '44:10146', image: 'standing-fan.webp', imageNodeId: '161:79', title: 'No connection', copy: 'please check your internet connection and\ntry again', illustration: 'standing' },
+  activation: { nodeId: '44:10147', image: 'ticket.webp', imageNodeId: '161:133', title: 'Activation failed', copy: 'we couldn’t activate fan mode.\nplease try again', illustration: 'ticket' },
+  location: { nodeId: '44:10147', image: 'ticket.webp', imageNodeId: '161:133', title: 'Location required', copy: 'Enable location access to activate\nFanModus at the stadium.', illustration: 'ticket' },
 };
 export default function ErrorState({ type, onRetry, message }) {
   const { match } = useFanModus();
@@ -25,7 +25,7 @@ export default function ErrorState({ type, onRetry, message }) {
     </div>
     <button className={styles.retry} onClick={onRetry}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/states/paper.png" alt="" draggable={false}/><span>try again</span>
+      <img src="/images/states/paper.webp" alt="" draggable={false}/><span>try again</span>
     </button>
   </FigmaScreen>;
 }

@@ -8,7 +8,7 @@ import { useSound } from '@/context/SoundContext';
 import useSessionTimeout from '@/components/animations/useSessionTimeout';
 import styles from './ActivationAnimation.module.css';
 
-const captionFont = localFont({ src: '../../public/fonts/barlow-semi-condensed-600.ttf', weight: '600', display: 'swap' });
+const captionFont = localFont({ src: '../../public/fonts/barlow-semi-condensed-600.woff2', weight: '600', display: 'swap' });
 
 // Durations measured from the original Figma GIF frame delays.
 const animations = {

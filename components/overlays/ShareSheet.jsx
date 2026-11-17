@@ -4,16 +4,17 @@ import Modal from '@/components/ui/Modal';
 import FigmaScreen, { FigmaSvg } from '@/components/ui/FigmaScreen';
 import MatchTicket from '@/components/ui/MatchTicket';
 import styles from './ShareSheet.module.css';
-import { useFanModus } from '@/context/FanModusContext';
-import { createMatchImage, downloadImage } from '@/lib/share';
+import { useFanModus, useFanModusClock } from '@/context/FanModusContext';
 export default function ShareSheet({ onClose }) {
-  const { seconds, entries, match } = useFanModus();
+  const { match } = useFanModus();
+  const { seconds, entries } = useFanModusClock();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
   async function exportImage(share) {
     if (busy) return;
     setBusy(true); setMessage('Preparing your matchday image…');
     try {
+      const { createMatchImage, downloadImage } = await import('@/lib/share');
       const blob = await createMatchImage(seconds, entries, match);
       const file = new File([blob], 'FanModus-matchday.png', { type: 'image/png' });
       if (share && navigator.canShare?.({ files: [file] })) {
