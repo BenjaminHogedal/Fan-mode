@@ -83,3 +83,7 @@ Tests bruger rene modeller og simuleret lyd-/animationsadfærd. De erstatter ikk
 - [Intro](docs/figma-intro.md), [onboarding](docs/figma-onboarding.md), [aktivering](docs/figma-activation.md), [kickoff](docs/figma-kickoff.md) og [kampvisninger](docs/figma-live-match.md)
 
 Figma-assets ligger lokalt i `public/`. Designfiler i `lib/` indeholder assetstier og referencekoordinater; komponenter refererer også direkte til lokale assets. `lib/assets.js` indeholder enkelte fælles logo-/fallback-definitioner, ikke alle projektets grafiske assets. Fonte selvhostes via `next/font/local`.
+
+## Performance
+
+Se [performancegennemgangen](docs/performance.md) for tabsfri assetkomprimering, Context-opdeling, lokal før/efter-måling og bevarede begrænsninger.

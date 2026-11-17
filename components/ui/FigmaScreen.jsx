@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { introAssets } from '@/lib/intro-design';
 import styles from './FigmaScreen.module.css';
 
-const bodyFont = localFont({ src: '../../public/fonts/intro-space-grotesk-variable.ttf', weight: '300 700', variable: '--font-figma-body', display: 'swap' });
+const bodyFont = localFont({ src: '../../public/fonts/intro-space-grotesk-variable.woff2', weight: '300 700', variable: '--font-figma-body', display: 'swap' });
 
 /** Responsive presentation of a Figma collage; shared status chrome stays outside. */
 export default function FigmaScreen({ nodeId, label, children }) {

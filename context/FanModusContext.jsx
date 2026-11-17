@@ -1,8 +1,9 @@
 'use client';
-import { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { initialSession, sessionReducer, restoreSession, elapsedSeconds, STORAGE_KEY } from '@/lib/fanmodus';
 
 const FanModusContext = createContext(null);
+const FanModusClockContext = createContext(null);
 export function FanModusProvider({ children, match }) {
   const [session, dispatch] = useReducer(sessionReducer, initialSession);
   const [ready, setReady] = useState(false);
@@ -33,6 +34,11 @@ export function FanModusProvider({ children, match }) {
     return () => { clearInterval(interval); document.removeEventListener('visibilitychange', tick); };
   }, [ready]);
   const seconds = elapsedSeconds(session, now);
-  return <FanModusContext.Provider value={{ session, dispatch, ready, now, seconds, entries: Math.floor(seconds / 60), storageWarning, match }}>{children}</FanModusContext.Provider>;
+  // Clock ticks only notify consumers that display time; navigation and overlays
+  // retain their context value until the session itself changes.
+  const value = useMemo(() => ({ session, dispatch, ready, storageWarning, match }), [session, ready, storageWarning, match]);
+  const clock = useMemo(() => ({ now, seconds, entries: Math.floor(seconds / 60) }), [now, seconds]);
+  return <FanModusContext.Provider value={value}><FanModusClockContext.Provider value={clock}>{children}</FanModusClockContext.Provider></FanModusContext.Provider>;
 }
 export const useFanModus = () => useContext(FanModusContext);
+export const useFanModusClock = () => useContext(FanModusClockContext);

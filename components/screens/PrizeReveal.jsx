@@ -9,14 +9,14 @@ import { useSound } from '@/context/SoundContext';
 import { playTicketFlip, TICKET_TIMING, WIN_TICKET_TIMING } from '@/lib/ticket-flip';
 import styles from './PrizeReveal.module.css';
 
-const anton = localFont({ src: '../../public/fonts/anton.ttf', weight: '400', display: 'swap' });
-const inter = localFont({ src: '../../public/fonts/kickoff-inter-variable.ttf', weight: '100 900', display: 'swap' });
+const anton = localFont({ src: '../../public/fonts/anton.woff2', weight: '400', display: 'swap' });
+const inter = localFont({ src: '../../public/fonts/kickoff-inter-variable.woff2', weight: '100 900', display: 'swap' });
 
 function TicketSurface({ back }) {
   return <>
     <div className={`${styles.surface} ${back ? styles.backSurface : ''}`}/>
     <div className={`${styles.texture} ${back ? styles.backTexture : ''}`}>
-      <Image src="/images/prize/paper.png" alt="" width={337.5} height={337.5} priority draggable={false}/>
+      <Image src="/images/prize/paper.webp" alt="" width={337.5} height={337.5} priority draggable={false}/>
       <div className={styles.grain}><Image src="/images/prize/texture.png" alt="" fill sizes="517px" priority draggable={false}/></div>
       <div className={styles.border}/>
     </div>
@@ -117,7 +117,7 @@ export default function PrizeReveal({ ref }) {
       const reach = 55 + (index * 37 % 140);
       return { x: [0, side * reach * 0.6, side * reach * 0.85, side * reach], y: [0, -100 - index * 19 % 180, -30, 130 + index * 11 % 100], rotate: [0, side * 90, side * 200, side * (240 + index * 29)], scale: [0.4, 1, 0.9, 0.6], opacity: [0, 1, 1, 0], transition: { duration: 1.6 + index % 4 * 0.12, delay: index % 7 * 0.018, times: [0, 0.3, 0.78, 1], ease: 'easeOut' } };
     } }}/>)}</div>
-    <div className={styles.club}><Image src="/images/post-match/bvb.png" alt="Borussia Dortmund" width={93} height={93} priority/></div>
+    <div className={styles.club}><Image src="/images/post-match/bvb.webp" alt="Borussia Dortmund" width={93} height={93} priority/></div>
     {winner && back ? <motion.h1 key={`heading-${winReplay}`} className={`${styles.victoryHeadline} ${anton.className}`} initial={reduced ? false : { opacity: 0, y: 18, scale: 1.2, rotate: -6 }} animate={{ opacity: 1, y: 0, scale: 1, rotate: -3 }} transition={{ type: 'spring', duration: 0.5, bounce: 0.15 }}>YOU WON<span aria-hidden="true">.</span></motion.h1> : <h1 className={styles.title}>your match prize</h1>}
     {!revealed && <p className={`${styles.instructions} ${inter.className}`}>Tap the ticket to reveal<br/>if you’ve won.</p>}
     <div className={styles.scene} data-flipping={busy} data-winner={winner}>
@@ -142,7 +142,7 @@ export default function PrizeReveal({ ref }) {
             <div className={styles.prizeTopline}><span>EXCLUSIVE</span><span>BVB 09</span></div>
             <div className={styles.prizeHalo} aria-hidden="true"/>
             <motion.div key={`jersey-${winReplay}`} className={styles.prizeJersey} initial={reduced ? false : { opacity: 0, y: 35, scale: 0.65, rotate: 8 }} animate={{ opacity: 1, y: 0, scale: 1, rotate: -9 }} transition={{ type: 'spring', duration: 0.65, bounce: 0.25, delay: reduced ? 0 : 0.1 }}>
-              <Image src="/images/onboarding/signed-jersey.png" alt="Your prize: a signed Borussia Dortmund jersey" fill sizes="270px" priority draggable={false}/>
+              <Image src="/images/onboarding/signed-jersey.webp" alt="Your prize: a signed Borussia Dortmund jersey" fill sizes="270px" priority draggable={false}/>
             </motion.div>
             <div className={styles.prizeFooter}><span>Signed</span><strong>BVB JERSEY</strong><span className={styles.prizeStar} aria-hidden="true">★</span></div>
             <div className={styles.sheenClip} aria-hidden="true"><motion.div className={styles.sheen} initial={false} style={{ opacity: 0, x: '-130%' }} animate={sheen}/></div>
@@ -154,7 +154,7 @@ export default function PrizeReveal({ ref }) {
             <div className={styles.backClub}><Image src="/images/prize/club.png" alt="" fill sizes="45px" priority draggable={false}/></div>
             <p className={`${styles.noLuck} ${anton.className}`}>NO LUCK<br/>TODAY.</p>
             <p className={styles.explanation}>The final whistle has blown on this<br/>draw.</p>
-            <div className={styles.stadium}><FigmaSvg src="/images/prize/line.svg"/><Image src="/images/prize/stadium.png" alt="" width={65.909} height={36} priority draggable={false}/><FigmaSvg src="/images/prize/line.svg"/></div>
+            <div className={styles.stadium}><FigmaSvg src="/images/prize/line.svg"/><Image src="/images/prize/stadium.webp" alt="" width={65.909} height={36} priority draggable={false}/><FigmaSvg src="/images/prize/line.svg"/></div>
             <p className={`${styles.nextMatch} ${inter.className}`}>See you next match!</p>
           </>}
         </div>

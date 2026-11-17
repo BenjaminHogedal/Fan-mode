@@ -72,7 +72,7 @@ Normalflip har cirka 1,20 sekunders bevægelse. Vinderflip har cirka 1,56 sekund
 
 BVB-logo, stadion-/publikumsfotos, signeret trøje, billetgrafik, teksturer, papir, penselstrøg og andre grafiske lag er tilføjet lokalt under `public/`. Modstanderlogoet kommer fra kampdata. Assetstier findes både i designmoduler og direkte i komponenter. Generiske fallback-definitioner i `lib/assets.js` er ikke en liste over manglende hovedassets.
 
-Fonte indlæses med `next/font/local`. `scripts/download-fonts.py` er bevaret som et manuelt hjælpeværktøj til de oprindelige globale fonte; det regenererer ikke alle de senere tilføjede fonte og køres ikke ved build.
+Fonte indlæses med `next/font/local` fra tabsfrit komprimerede WOFF2-filer. De oprindelige TTF-filer er bevaret som kilder. `scripts/download-fonts.py` er bevaret som et manuelt hjælpeværktøj til de oprindelige globale fonte; det regenererer hverken alle de senere tilføjede fonte eller WOFF2-varianterne og køres ikke ved build.
 
 Skærmene bruger overvejende et 390 × 844 referencecanvas med absolutte koordinater. `FigmaScreen` skalerer efter bredde; intro og aktivering har tilsvarende egne wrappers. Menuen bruger fast 390 × 800 indhold under statusbaren. Desktop med mus/trackpad bruger en centreret 390 × 844-ramme, skaleret efter tilgængelig plads. `PreviewFit` tilpasser højden af indhold og dialoger; swipe normaliserer pointerkoordinater efter den renderede skala.
 
@@ -91,7 +91,7 @@ Denne oprydning ændrer ikke appens adfærd:
 - Kampforespørgslen kan efter kickoff vælge en anden kamp eller ingen kamp. Sessionen er ikke bundet til et match-id.
 - Der er ingen offline-fallback for kampdata. Demo-panelet vises ikke i den indledende fejlgren uden match.
 - Skjulte faseskiftknapper er stadig aktive uden synligt demo-panel.
-- Den fælles Context opdaterer også forbrugere, som ikke viser tid.
+- Klokkeslæt og afledte tidsværdier udstilles i en særskilt Context. Kun komponenter, som bruger `useFanModusClock`, abonnerer på klokkeopdateringer; sessionens faseskift opdaterer fortsat navigationen.
 - Sessiongendannelsen validerer ikke alle felters typer og tilladte værdier.
 - Smalle skærme, tekstforstørrelse og klikområder kræver manuel kontrol; faste koordinater og clipping er bevaret.
 - Eksterne logoer kan kræve CORS-håndtering for at kunne eksporteres fra Canvas. Web Share skal kontrolleres på de konkrete browsere.

@@ -5,7 +5,7 @@ import localFont from 'next/font/local';
 import FigmaScreen, { FigmaSvg } from './FigmaScreen';
 import styles from './States.module.css';
 
-const inter = localFont({ src: '../../public/fonts/kickoff-inter-variable.ttf', weight: '100 900', display: 'swap' });
+const inter = localFont({ src: '../../public/fonts/kickoff-inter-variable.woff2', weight: '100 900', display: 'swap' });
 const stands = ['north', 'east', 'south', 'west'];
 
 export default function LoadingState({ onClose }) {
