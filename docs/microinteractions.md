@@ -39,6 +39,6 @@ Alle filer ligger i `public/sounds/`:
 | `ticket-flip.mp3` | Ved vendingen efter anticipation, i begge retninger | 0,95 s normalt / 1,2 s ved vinderflip med fade-out |
 | `crowd-roar.mp3` | FanMode activated og vinderafsløring | Sekund 2–5 med kort fade-in/-out |
 
-Lyd er aktuelt slået til uden mute/unmute-knap eller gemt lydpræference. `SoundProvider` forsøger at åbne lydsystemet ved pointer-/tastaturinteraktion. Controlleren forhindrer overlappende afspilning af samme cue, kan genstarte et cue og annullerer ventende cues ved stop. Den opgiver en cue efter 200 ms frem for at afspille den langt efter animationen. En skjult fane stopper lydene.
+Lyd er som udgangspunkt slået til. En neutral højttalerknap på 44 × 44 px øverst til højre giver mute/unmute uden synlig tekst; ikonet er 18 px, og aria-pressed angiver mute-tilstanden. Indstillingen gemmes i localStorage og indlæses på klienten. Mute stopper afspilning og annullerer ventende cues; unmute genafspiller ikke tidligere cues. Knappen skjules på BVB-menuen og ved åbne dialoger. `SoundProvider` forsøger at åbne lydsystemet ved pointer-/tastaturinteraktion. Controlleren forhindrer overlappende afspilning af samme cue, kan genstarte et cue og annullerer ventende cues ved stop. Den opgiver en cue efter 200 ms frem for at afspille den langt efter animationen. En skjult fane stopper lydene.
 
-Se [README](../README.md#checks) for de aktuelle 46 model-/sekvenstests og [implementeringsrapporten](implementation.md) for simuleret funktionalitet og begrænsninger.
+Se [README](../README.md#checks) for de aktuelle 53 model-/sekvenstests og [implementeringsrapporten](implementation.md) for simuleret funktionalitet og begrænsninger.
